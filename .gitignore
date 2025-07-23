@@ -64,3 +64,8 @@ local.properties
 .idea/
 .vscode/
 *.iml
+
+# Claude AI related files
+.claude/
+AI_CONTEXT_GUIDE.md
+CLAUDE.md
