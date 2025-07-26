@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import '../constants/app_constants.dart';
 import '../components/common/rassi_search_bar.dart';
 import '../components/common/rassi_tab_bar.dart';
-import '../components/tabs/home_tab_content.dart';
-import '../components/tabs/ai_signal_tab_content.dart';
-import '../components/tabs/stock_catch_tab_content.dart';
-import '../components/tabs/market_view_tab_content.dart';
+import '../components/common/home_tab_manager.dart';
 
 /// 리팩토링된 홈페이지
 /// iOS의 UIViewController - UI Logic 담당
@@ -22,7 +19,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   bool _isHeaderCollapsed = false;
   
   // 탭 선택 상태
-  int _selectedTabIndex = 0;
+  int _selectedTabIndex = HomeTabManager.defaultTabIndex;
 
   @override
   void initState() {
@@ -115,6 +112,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       delegate: _StickyHeaderDelegate(
         minHeight: AppConstants.stickyHeaderHeight,
         maxHeight: AppConstants.stickyHeaderHeight,
+        selectedIndex: _selectedTabIndex,
         child: Container(
           decoration: const BoxDecoration(
             color: Colors.white,
@@ -135,10 +133,15 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 },
               ),
               RassiTabBar(
-                tabs: AppConstants.homeTabs,
+                tabs: HomeTabManager.tabNames,
                 selectedIndex: _selectedTabIndex,
+                bottomShape: HomeTabManager.bottomShape,
                 onTabSelected: (index) {
-                  setState(() => _selectedTabIndex = index);
+                  if (HomeTabManager.isValidTabIndex(index)) {
+                    setState(() {
+                      _selectedTabIndex = index;
+                    });
+                  }
                 },
               ),
             ],
@@ -160,18 +163,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   /// 탭 인덱스에 따른 콘텐츠 위젯 반환
   Widget _getContentByTab() {
-    switch (_selectedTabIndex) {
-      case 0:
-        return const HomeTabContent();
-      case 1:
-        return const AISignalTabContent();
-      case 2:
-        return const StockCatchTabContent();
-      case 3:
-        return const MarketViewTabContent();
-      default:
-        return const SizedBox.shrink();
-    }
+    return HomeTabManager.getTabContent(_selectedTabIndex);
   }
 }
 
@@ -181,11 +173,13 @@ class _StickyHeaderDelegate extends SliverPersistentHeaderDelegate {
   final double minHeight;
   final double maxHeight;
   final Widget child;
+  final int selectedIndex;
 
   _StickyHeaderDelegate({
     required this.minHeight,
     required this.maxHeight,
     required this.child,
+    required this.selectedIndex,
   });
 
   @override
@@ -200,8 +194,9 @@ class _StickyHeaderDelegate extends SliverPersistentHeaderDelegate {
   }
 
   @override
-  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
-    return maxHeight != oldDelegate.maxExtent ||
+  bool shouldRebuild(covariant _StickyHeaderDelegate oldDelegate) {
+    return selectedIndex != oldDelegate.selectedIndex ||
+           maxHeight != oldDelegate.maxExtent ||
            minHeight != oldDelegate.minExtent;
   }
 }
