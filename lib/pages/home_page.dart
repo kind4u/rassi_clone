@@ -18,18 +18,27 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   late final ScrollController _scrollController;
   bool _isHeaderCollapsed = false;
   
-  // 탭 선택 상태
-  int _selectedTabIndex = HomeTabManager.defaultTabIndex;
+  // 탭 관련 (iOS의 UITabBarController와 유사)
+  late final TabController _tabController;
+  late final PageController _pageController;
 
   @override
   void initState() {
     super.initState();
     _scrollController = ScrollController()..addListener(_onScroll);
+    _tabController = TabController(
+      length: HomeTabManager.tabNames.length,
+      initialIndex: HomeTabManager.defaultTabIndex,
+      vsync: this,
+    );
+    _pageController = PageController(initialPage: HomeTabManager.defaultTabIndex);
   }
 
   @override
   void dispose() {
     _scrollController.dispose();
+    _tabController.dispose();
+    _pageController.dispose();
     super.dispose();
   }
 
@@ -38,6 +47,25 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     
     if (isCollapsed != _isHeaderCollapsed) {
       setState(() => _isHeaderCollapsed = isCollapsed);
+    }
+  }
+
+  // 탭 선택 시 PageView도 함께 이동 (iOS의 TabBar delegate와 유사)
+  void _onTabSelected(int index) {
+    if (HomeTabManager.isValidTabIndex(index)) {
+      _tabController.animateTo(index);
+      _pageController.animateToPage(
+        index,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
+
+  // PageView 스와이프 시 TabBar도 함께 이동
+  void _onPageChanged(int index) {
+    if (HomeTabManager.isValidTabIndex(index)) {
+      _tabController.animateTo(index);
     }
   }
 
@@ -112,7 +140,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       delegate: _StickyHeaderDelegate(
         minHeight: AppConstants.stickyHeaderHeight,
         maxHeight: AppConstants.stickyHeaderHeight,
-        selectedIndex: _selectedTabIndex,
         child: Container(
           decoration: const BoxDecoration(
             color: Colors.white,
@@ -132,16 +159,15 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   // 검색 페이지로 이동
                 },
               ),
-              RassiTabBar(
-                tabs: HomeTabManager.tabNames,
-                selectedIndex: _selectedTabIndex,
-                bottomShape: HomeTabManager.bottomShape,
-                onTabSelected: (index) {
-                  if (HomeTabManager.isValidTabIndex(index)) {
-                    setState(() {
-                      _selectedTabIndex = index;
-                    });
-                  }
+              ListenableBuilder(
+                listenable: _tabController,
+                builder: (context, child) {
+                  return RassiTabBar(
+                    tabs: HomeTabManager.tabNames,
+                    selectedIndex: _tabController.index,
+                    bottomShape: HomeTabManager.bottomShape,
+                    onTabSelected: _onTabSelected,
+                  );
                 },
               ),
             ],
@@ -151,19 +177,21 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     );
   }
 
-  /// 콘텐츠 리스트 - 선택된 탭에 따라 다른 콘텐츠 표시
+  /// 콘텐츠 리스트 - PageView로 스와이프 지원
   Widget _buildContentList() {
-    return SliverPadding(
-      padding: const EdgeInsets.all(16.0),
-      sliver: SliverToBoxAdapter(
-        child: _getContentByTab(),
+    return SliverFillRemaining(
+      child: PageView.builder(
+        controller: _pageController,
+        onPageChanged: _onPageChanged,
+        itemCount: HomeTabManager.tabNames.length,
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: HomeTabManager.getTabContent(index),
+          );
+        },
       ),
     );
-  }
-
-  /// 탭 인덱스에 따른 콘텐츠 위젯 반환
-  Widget _getContentByTab() {
-    return HomeTabManager.getTabContent(_selectedTabIndex);
   }
 }
 
@@ -173,13 +201,11 @@ class _StickyHeaderDelegate extends SliverPersistentHeaderDelegate {
   final double minHeight;
   final double maxHeight;
   final Widget child;
-  final int selectedIndex;
 
   _StickyHeaderDelegate({
     required this.minHeight,
     required this.maxHeight,
     required this.child,
-    required this.selectedIndex,
   });
 
   @override
@@ -195,8 +221,7 @@ class _StickyHeaderDelegate extends SliverPersistentHeaderDelegate {
 
   @override
   bool shouldRebuild(covariant _StickyHeaderDelegate oldDelegate) {
-    return selectedIndex != oldDelegate.selectedIndex ||
-           maxHeight != oldDelegate.maxExtent ||
+    return maxHeight != oldDelegate.maxExtent ||
            minHeight != oldDelegate.minExtent;
   }
 }
