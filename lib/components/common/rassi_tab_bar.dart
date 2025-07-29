@@ -44,7 +44,7 @@ class RassiTabBar extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
-                            color: isSelected ? Colors.deepPurple : Colors.grey[600],
+                            color: isSelected ? Colors.black : Colors.grey[600],
                           ),
                         ),
                       ),
@@ -55,7 +55,7 @@ class RassiTabBar extends StatelessWidget {
                         height: 2,
                         margin: const EdgeInsets.symmetric(horizontal: 8),
                         decoration: BoxDecoration(
-                          color: Colors.deepPurple,
+                          color: Colors.black,
                           borderRadius: _getBottomBarBorderRadius(),
                         ),
                       ),
@@ -69,6 +69,7 @@ class RassiTabBar extends StatelessWidget {
     );
   }
   
+  /// tab bar 파라미터에 따른 bottom shape 변수 조정
   BorderRadius _getBottomBarBorderRadius() {
     switch (bottomShape) {
       case TabBottomShape.rounded:

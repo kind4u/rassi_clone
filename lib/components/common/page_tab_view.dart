@@ -19,7 +19,7 @@ class _PageTabViewState extends State<PageTabView> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
 
-  // 각 페이지별 샘플 데이터
+  // 각 페이지별 샘플 데이터 하드코딩
   final List<List<Map<String, String>>> _pageData = [
     [
       {'title': '삼성전자', 'subtitle': '+2.1%'},
@@ -50,27 +50,46 @@ class _PageTabViewState extends State<PageTabView> {
   }
 
   Widget _buildSquareGrid(List<Map<String, String>> pageData) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: Row(
-        children: pageData.asMap().entries.map((entry) {
-          final index = entry.key;
-          final data = entry.value;
-          
-          return Expanded(
-            child: Padding(
-              padding: EdgeInsets.only(
-                right: index < pageData.length - 1 ? 8.0 : 0,
-              ),
+    // 배지 배경색 (연한 버전)
+    final List<Color> badgeColors = [
+      Colors.deepPurple.shade50,    // 1번 - 연한 보라
+      Colors.blue.shade50,          // 2번 - 연한 파랑  
+      Colors.amber.shade50,         // 3번 - 연한 노랑
+    ];
+    
+    // 배지 텍스트 색상 (진한 버전)
+    final List<Color> badgeTextColors = [
+      Colors.deepPurple,    // 1번 - 진한 보라
+      Colors.blue,          // 2번 - 진한 파랑  
+      Colors.amber.shade700,// 3번 - 진한 노랑 (가독성을 위해 더 진하게)
+    ];
+    
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        // 전체 가용 넓이를 3등분하고 간격을 뺀 실제 아이템 너비 계산
+        final spacing = 8.0;
+        final totalSpacing = spacing * (pageData.length - 1);
+        final itemWidth = (constraints.maxWidth - totalSpacing) / pageData.length;
+        
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: pageData.asMap().entries.map((entry) {
+            final index = entry.key;
+            final data = entry.value;
+            
+            return SizedBox(
+              width: itemWidth,  // 완전히 동일한 고정 너비
               child: SquareComponent(
                 title: data['title']!,
                 subtitle: data['subtitle']!,
+                badgeColor: index < badgeColors.length ? badgeColors[index] : null,
+                badgeTextColor: index < badgeTextColors.length ? badgeTextColors[index] : null,
                 onTap: () => print('${data['title']} 클릭됨'),
               ),
-            ),
-          );
-        }).toList(),
-      ),
+            );
+          }).toList(),
+        );
+      },
     );
   }
 
@@ -93,6 +112,7 @@ class _PageTabViewState extends State<PageTabView> {
             children: _pageData.map((pageData) => _buildSquareGrid(pageData)).toList(),
           ),
         ),
+        // padding - 16
         const SizedBox(height: 16),
         
         // 페이지 인디케이터
@@ -107,7 +127,7 @@ class _PageTabViewState extends State<PageTabView> {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: _currentPage == index
-                    ? Colors.deepPurple
+                    ? Colors.black
                     : Colors.grey[300],
               ),
             ),

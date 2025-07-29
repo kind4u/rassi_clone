@@ -27,31 +27,89 @@ class _HomeTabContentState extends State<HomeTabContent> {
     return Container(
       color: Colors.white, // 흰색 배경
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.symmetric(vertical: 16.0),
         child: Column(
           children: [
-            TitleBar(
-              title: "오늘의 추천",
-              detailText: "더보기",
-              onDetailTap: () => print('더보기 클릭됨'),
+            // 오늘의 추천 Title
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: TitleBar(
+                title: "오늘의 추천",
+                detailText: "더보기",
+                onDetailTap: () => print('더보기 클릭됨'),
+              ),
             ),
+            // padding - 16
             const SizedBox(height: 16),
-            DeskComponent(
-              onTap: () => print('DeskComponent 클릭됨'),
+            // 오늘의 추천 Component
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: DeskComponent(
+                onTap: () => print('DeskComponent 클릭됨'),
+              ),
             ),
+            // padding - 24
             const SizedBox(height: 24),
-            TitleBar(
-              title: "인기 종목",
-              detailText: _pageDetailTexts[_currentPage], // 선택된 페이지에 따라 변경
-              onDetailTap: () => print('${_pageDetailTexts[_currentPage]} 클릭됨'),
+
+            // 인기 종목 Title
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: TitleBar(
+                title: "인기 종목",
+                detailText: _pageDetailTexts[_currentPage], // 선택된 페이지에 따라 변경
+                detailColor: Colors.deepPurple,
+              ),
             ),
+            // padding - 16
             const SizedBox(height: 16),
-            PageTabView(
-              onPageChanged: (index) {
-                setState(() {
-                  _currentPage = index;
-                });
-              },
+            // 인기 종목 Components
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: PageTabView(
+                onPageChanged: (index) {
+                  // current page state에 따라 인기종목 title text 변경
+                  setState(() {
+                    _currentPage = index;
+                  });
+                },
+              ),
+            ),
+            // padding - 24
+            const SizedBox(height: 24),
+
+            // 매매신호 Title
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: TitleBar(
+                title: "오늘의 AI매매신호는?"
+              ),
+            ),
+            // 매매신호 Contents
+            // TODO: 매매신호
+            // padding - 24
+            const SizedBox(height: 24),
+
+            // 회색 Divider
+            Container(
+              height: 16,
+              color: Colors.grey.shade100
+            ),
+
+            // AI픽워드 Title
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: TitleBar(
+                title: "AI픽워드",
+                detailText: "AI가 주가 상승에 영향을 주는 키워드만을 픽!"
+              ),
+            ),
+            // padding - 24
+            const SizedBox(height: 24),
+
+            // 회색 Divider
+            Container(
+              height: 16,
+              color: Colors.grey.shade100
             ),
             const SizedBox(height: 100),
           ],
