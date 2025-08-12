@@ -7,8 +7,11 @@ class StockCatchTabContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
+    return ScrollConfiguration(
+      behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
         _buildStockCatch(),
         const SizedBox(height: 16),
         _buildTrendingStocks(),
@@ -16,6 +19,8 @@ class StockCatchTabContent extends StatelessWidget {
         _buildBreakoutStocks(),
         const SizedBox(height: 100),
       ],
+        ),
+      ),
     );
   }
 

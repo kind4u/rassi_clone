@@ -7,8 +7,11 @@ class MarketViewTabContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
+    return ScrollConfiguration(
+      behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
         _buildGlobalMarket(),
         const SizedBox(height: 16),
         _buildMarketAnalysis(),
@@ -16,6 +19,8 @@ class MarketViewTabContent extends StatelessWidget {
         _buildGlobalIndices(),
         const SizedBox(height: 100),
       ],
+        ),
+      ),
     );
   }
 

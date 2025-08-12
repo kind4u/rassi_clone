@@ -28,10 +28,13 @@ class _HomeTabContentState extends State<HomeTabContent> {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white, // 흰색 배경
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 16.0),
-        child: Column(
+      child: ScrollConfiguration(
+        behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
+        child: SingleChildScrollView(
+          child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const SizedBox(height: 16),
             // 오늘의 추천 Title
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -116,6 +119,7 @@ class _HomeTabContentState extends State<HomeTabContent> {
             ),
             const SizedBox(height: 100),
           ],
+        ),
         ),
       ),
     );
