@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import '../common/title_bar.dart';
 import '../common/desk_component.dart';
 import '../common/page_tab_view.dart';
+import '../common/ai_signal_status_card.dart';
+import '../common/ai_keyword_stats_card.dart';
 
 /// 홈 탭의 콘텐츠를 담당하는 위젯
 class HomeTabContent extends StatefulWidget {
@@ -85,8 +87,7 @@ class _HomeTabContentState extends State<HomeTabContent> {
               ),
             ),
             // 매매신호 Contents
-            // TODO: 매매신호
-            // padding - 24
+            const AISignalStatusCard(),
             const SizedBox(height: 24),
 
             // 회색 Divider
@@ -103,7 +104,9 @@ class _HomeTabContentState extends State<HomeTabContent> {
                 detailText: "AI가 주가 상승에 영향을 주는 키워드만을 픽!"
               ),
             ),
-            // padding - 24
+            // AI픽워드 Stats Card
+            const SizedBox(height: 16),
+            const AIKeywordStatsCard(),
             const SizedBox(height: 24),
 
             // 회색 Divider
