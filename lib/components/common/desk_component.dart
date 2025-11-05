@@ -4,10 +4,7 @@ import 'package:flutter/material.dart';
 class DeskComponent extends StatelessWidget {
   final VoidCallback? onTap;
 
-  const DeskComponent({
-    super.key,
-    this.onTap,
-  });
+  const DeskComponent({super.key, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -24,25 +21,21 @@ class DeskComponent extends StatelessWidget {
           children: [
             // 첫 번째 줄: 보라색 capsule + 시계 아이콘 + "시간 외 정보"
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
               decoration: BoxDecoration(
-                color: Colors.deepPurple,
+                color: Color(0xFF6665FD),
                 borderRadius: BorderRadius.circular(16), // capsule 모양
               ),
               child: const Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(
-                    Icons.access_time,
-                    color: Colors.white,
-                    size: 16,
-                  ),
-                  SizedBox(width: 6),
+                  Icon(Icons.access_time_sharp, color: Colors.white, size: 14),
+                  SizedBox(width: 2),
                   Text(
                     '시간 외 정보',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 12,
+                      fontSize: 11,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -50,7 +43,7 @@ class DeskComponent extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 4),
-            
+
             // 두 번째 줄: 큰 폰트 텍스트
             const Text(
               '주요 종목 분석 리포트',
@@ -61,7 +54,7 @@ class DeskComponent extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 4),
-            
+
             // 세 번째 줄: 보라색 해시태그 2개
             Row(
               children: [
@@ -80,7 +73,7 @@ class DeskComponent extends StatelessWidget {
     return Text(
       text,
       style: const TextStyle(
-        color: Colors.deepPurple,
+        color: Color(0xFF6665FD),
         fontSize: 12,
         fontWeight: FontWeight.w500,
       ),

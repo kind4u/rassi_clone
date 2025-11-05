@@ -17,7 +17,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   // 스크롤 관련 (iOS의 UIScrollViewDelegate와 유사)
   late final ScrollController _scrollController;
   bool _isHeaderCollapsed = false;
-  
+
   // 탭 관련 (iOS의 UITabBarController와 유사)
   late final TabController _tabController;
   late final PageController _pageController;
@@ -31,7 +31,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       initialIndex: HomeTabManager.defaultTabIndex,
       vsync: this,
     );
-    _pageController = PageController(initialPage: HomeTabManager.defaultTabIndex);
+    _pageController = PageController(
+      initialPage: HomeTabManager.defaultTabIndex,
+    );
   }
 
   @override
@@ -44,7 +46,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   void _onScroll() {
     final isCollapsed = _scrollController.offset >= AppConstants.expandedHeight;
-    
+
     if (isCollapsed != _isHeaderCollapsed) {
       setState(() => _isHeaderCollapsed = isCollapsed);
     }
@@ -74,11 +76,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     return Scaffold(
       body: CustomScrollView(
         controller: _scrollController,
-        slivers: [
-          _buildAppBar(),
-          _buildStickyHeader(),
-          _buildContentList(),
-        ],
+        slivers: [_buildAppBar(), _buildStickyHeader(), _buildContentList()],
       ),
     );
   }
@@ -101,30 +99,20 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             ),
           ),
           child: const Center(
-            child: Column(
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  AppConstants.appIcon,
-                  style: TextStyle(fontSize: 48),
-                ),
-                SizedBox(height: 8),
+                Text(AppConstants.appIcon, style: TextStyle(fontSize: 30)),
+                SizedBox(width: 8),
                 Text(
                   AppConstants.appTitle,
                   style: TextStyle(
-                    fontSize: 28,
+                    fontSize: 30,
                     fontWeight: FontWeight.bold,
-                    color: Colors.black87,
+                    color: Color(0xFF6665FD),
                   ),
                 ),
                 SizedBox(height: 4),
-                Text(
-                  AppConstants.appSubtitle,
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.grey,
-                  ),
-                ),
               ],
             ),
           ),
@@ -215,13 +203,17 @@ class _StickyHeaderDelegate extends SliverPersistentHeaderDelegate {
   double get maxExtent => maxHeight;
 
   @override
-  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
+  Widget build(
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) {
     return SizedBox.expand(child: child);
   }
 
   @override
   bool shouldRebuild(covariant _StickyHeaderDelegate oldDelegate) {
     return maxHeight != oldDelegate.maxExtent ||
-           minHeight != oldDelegate.minExtent;
+        minHeight != oldDelegate.minExtent;
   }
 }

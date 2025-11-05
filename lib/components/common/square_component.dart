@@ -35,22 +35,19 @@ class SquareComponent extends StatelessWidget {
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withValues(alpha: 0.1),
-                spreadRadius: 1,
-                blurRadius: 8,
-                offset: const Offset(0, 2), // 살짝 아래쪽 그림자
-              ),
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.05),
-                spreadRadius: 0,
+                spreadRadius: 2,
                 blurRadius: 4,
-                offset: const Offset(0, 0), // 전방향 그림자
+                offset: const Offset(0, 2), // 살짝 아래쪽 그림자
               ),
             ],
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // 상단 배지
+              /*
+              상단 뱃지
+              ex) 삼성전자의 "삼"을 표기함 -> title[0]
+              */
               if (badgeColor != null)
                 Container(
                   width: 32,
@@ -71,31 +68,32 @@ class SquareComponent extends StatelessWidget {
                   ),
                 ),
 
+              const SizedBox(height: 8),
+
+              /*
+              하단 Text 영역
+              해당 종목의 이름을 표기
+              */
+              Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black,
+                ),
+                textAlign: TextAlign.left,
+              ),
+
               const SizedBox(height: 4),
-              
-              // 하단 텍스트 영역 (SwiftUI VStack의 두 번째 요소)
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                    textAlign: TextAlign.left,
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    subtitle,
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.grey[600],
-                    ),
-                    textAlign: TextAlign.left,
-                  ),
-                ],
+
+              /*
+              하단 Text 영역
+              해당 종목의 등락률을 보여줌
+              */
+              Text(
+                subtitle,
+                style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+                textAlign: TextAlign.left,
               ),
             ],
           ),
