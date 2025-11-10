@@ -40,14 +40,15 @@ class _HomeTabContentState extends State<HomeTabContent> {
                 onDetailTap: () {},
               ),
             ),
-            // padding - 16
+
             const SizedBox(height: 16),
+
             // 라씨데스크 Component
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: DeskComponent(onTap: () {}),
             ),
-            // padding - 24
+
             const SizedBox(height: 24),
 
             // 라씨의 종목 Title
@@ -59,8 +60,9 @@ class _HomeTabContentState extends State<HomeTabContent> {
                 detailColor: Color(0xFF6665FD),
               ),
             ),
-            // padding - 16
+
             const SizedBox(height: 16),
+
             // 라씨의 종목 Components
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -73,7 +75,7 @@ class _HomeTabContentState extends State<HomeTabContent> {
                 },
               ),
             ),
-            // padding - 24
+
             const SizedBox(height: 24),
 
             // 매매신호 Title
@@ -81,12 +83,13 @@ class _HomeTabContentState extends State<HomeTabContent> {
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: TitleBar(title: "오늘의 AI매매신호는?"),
             ),
+
             // 매매신호 Contents
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: AiDescriptionCard(),
             ),
-            // padding - 24
+
             const SizedBox(height: 24),
 
             // 회색 Divider

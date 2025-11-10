@@ -74,9 +74,24 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomScrollView(
+      body: NestedScrollView(
         controller: _scrollController,
-        slivers: [_buildAppBar(), _buildStickyHeader(), _buildContentList()],
+        headerSliverBuilder: (context, innerBoxIsScrolled) {
+          return [_buildAppBar(), _buildStickyHeader()];
+        },
+        body: PageView.builder(
+          controller: _pageController,
+          onPageChanged: _onPageChanged,
+          itemCount: HomeTabManager.tabNames.length,
+          itemBuilder: (context, index) {
+            // ListView로 감싸서 NestedScrollView의 body로 사용
+            // 이렇게 하면 헤더와 함께 스크롤되면서 overflow 방지
+            return ListView(
+              padding: const EdgeInsets.all(16.0),
+              children: [HomeTabManager.getTabContent(index)],
+            );
+          },
+        ),
       ),
     );
   }
@@ -161,23 +176,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  /// 콘텐츠 리스트 - PageView로 스와이프 지원
-  Widget _buildContentList() {
-    return SliverFillRemaining(
-      child: PageView.builder(
-        controller: _pageController,
-        onPageChanged: _onPageChanged,
-        itemCount: HomeTabManager.tabNames.length,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: HomeTabManager.getTabContent(index),
-          );
-        },
       ),
     );
   }
