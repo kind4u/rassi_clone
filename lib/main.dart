@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'pages/home_page.dart';
-import 'pages/pocket_page.dart';
-import 'pages/notification_page.dart';
-import 'pages/my_page.dart';
+import 'pages/home/home_page.dart';
+import 'pages/pocket/pocket_page.dart';
+import 'pages/notification/notification_page.dart';
+import 'pages/my/my_page.dart';
 
 void main() {
   runApp(const MyApp());

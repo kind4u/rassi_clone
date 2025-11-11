@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:rassi_clone/components/common/ai_description_card.dart';
-import '../common/title_bar.dart';
-import '../common/desk_component.dart';
-import '../common/page_tab_view.dart';
+import 'package:rassi_clone/components/common/pickword_card.dart';
+import '../../components/common/title_bar.dart';
+import '../../components/common/desk_component.dart';
+import '../../components/common/page_tab_view.dart';
 
 /// 홈 탭의 콘텐츠를 담당하는 위젯
 class HomeTabContent extends StatefulWidget {
@@ -95,6 +96,8 @@ class _HomeTabContentState extends State<HomeTabContent> {
             // 회색 Divider
             Container(height: 16, color: Colors.grey.shade100),
 
+            const SizedBox(height: 24),
+
             // AI픽워드 Title
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -103,11 +106,73 @@ class _HomeTabContentState extends State<HomeTabContent> {
                 detailText: "AI가 주가 상승에 영향을 주는 키워드만을 픽!",
               ),
             ),
-            // padding - 24
+
+            // AI픽워드 Contents
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: PickwordCard(),
+            ),
+
             const SizedBox(height: 24),
 
             // 회색 Divider
             Container(height: 16, color: Colors.grey.shade100),
+
+            const SizedBox(height: 24),
+
+            // 비교종목 Title
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: TitleBar(title: "비교해서 더 좋은 종목 찾기"),
+            ),
+
+            // 비교종목 Contents
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: AiDescriptionCard(),
+            ),
+
+            const SizedBox(height: 24),
+
+            // 회색 Divider
+            Container(height: 16, color: Colors.grey.shade100),
+
+            const SizedBox(height: 24),
+
+            // 종목 캐치 Title
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: TitleBar(
+                title: "라씨 매매비서가 캐치한 종목",
+                detailText: "더보기",
+                onDetailTap: () {},
+              ),
+            ),
+
+            // 종목 캐치 Contents
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: AiDescriptionCard(),
+            ),
+
+            const SizedBox(height: 24),
+
+            // 회색 Divider
+            Container(height: 16, color: Colors.grey.shade100),
+
+            const SizedBox(height: 24),
+
+            // 급상승 Title
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: TitleBar(
+                title: "커뮤니티 활동 급상승",
+                detailText: "더보기",
+                onDetailTap: () {},
+              ),
+            ),
+
+            // 여유 공간
             const SizedBox(height: 100),
           ],
         ),

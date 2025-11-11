@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../constants/app_constants.dart';
-import '../components/common/rassi_search_bar.dart';
-import '../components/common/rassi_tab_bar.dart';
-import '../components/common/home_tab_manager.dart';
+import '../../constants/app_constants.dart';
+import '../../components/common/rassi_search_bar.dart';
+import '../../components/common/rassi_tab_bar.dart';
+import '../../components/common/home_tab_manager.dart';
 
 /// 리팩토링된 홈페이지
 /// iOS의 UIViewController - UI Logic 담당
