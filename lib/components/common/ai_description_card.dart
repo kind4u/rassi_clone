@@ -64,7 +64,9 @@ class AiDescriptionCard extends StatelessWidget {
                   SizedBox(width: 12),
 
                   Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: buyCount > sellCount
+                        ? CrossAxisAlignment.start
+                        : CrossAxisAlignment.end,
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       // 매수 circle

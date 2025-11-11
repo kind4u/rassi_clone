@@ -87,7 +87,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             // ListView로 감싸서 NestedScrollView의 body로 사용
             // 이렇게 하면 헤더와 함께 스크롤되면서 overflow 방지
             return ListView(
-              padding: const EdgeInsets.all(16.0),
+              padding: EdgeInsets.only(top: 16.0),
               children: [HomeTabManager.getTabContent(index)],
             );
           },
