@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:rassi_clone/components/common/catch_recommend_item.dart';
 
 class CatchRecommendCard extends StatefulWidget {
   const CatchRecommendCard({super.key});
@@ -53,25 +55,23 @@ class _CatchRecommendCardState extends State<CatchRecommendCard> {
 
   // Tab 1: 고정 데이터
   Widget _buildFixedTab() {
-    return Container(
-      margin: const EdgeInsets.only(top: 16),
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Colors.grey.shade300),
-      ),
+    return Padding(
+      padding: const EdgeInsets.only(top: 16.0),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text(
-            '고정 데이터 탭',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          CatchRecommendItem(
+            icon: Icons.face,
+            description: '외국인과 라씨 매매비서가 함께 매수한 종목',
+            stock: '제주반도체',
+            stockNumber: '080220',
           ),
-          SizedBox(height: 8),
-          Text('종목명: 삼성전자'),
-          Text('현재가: 75,000원'),
-          Text('등락률: +2.5%'),
+          CatchRecommendItem(
+            icon: Icons.account_balance,
+            description: '기관과 라씨 매매비서가 함께 매수한 종목',
+            stock: '삼성전자우',
+            stockNumber: '005935',
+          ),
         ],
       ),
     );
@@ -88,9 +88,7 @@ class _CatchRecommendCardState extends State<CatchRecommendCard> {
           margin: const EdgeInsets.symmetric(horizontal: 4),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: _currentPage == index
-                ? Color(0xFF6665FD)
-                : Colors.grey.shade300,
+            color: _currentPage == index ? Colors.black : Colors.grey.shade300,
           ),
         );
       }),
@@ -103,7 +101,7 @@ class _CatchRecommendCardState extends State<CatchRecommendCard> {
       children: [
         Container(
           margin: const EdgeInsets.only(top: 16),
-          height: 200,
+          height: 180,
           child: PageView.builder(
             controller: _pageController,
             itemCount: 3,
@@ -113,30 +111,38 @@ class _CatchRecommendCardState extends State<CatchRecommendCard> {
               });
             },
             itemBuilder: (context, index) {
-              return Container(
-                margin: const EdgeInsets.symmetric(horizontal: 8),
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: Colors.grey.shade300),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '페이지 ${index + 1}',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(height: 8),
-                    Text('종목명: ${['카카오', 'NAVER', 'SK하이닉스'][index]}'),
-                    Text('현재가: ${['50,000', '180,000', '130,000'][index]}원'),
-                    Text('등락률: ${['+1.2%', '-0.8%', '+3.5%'][index]}'),
-                  ],
-                ),
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  CatchRecommendItem(
+                    icon: [
+                      FontAwesomeIcons.crown,
+                      FontAwesomeIcons.rankingStar,
+                      FontAwesomeIcons.award,
+                    ][index],
+                    description: [
+                      '적중률과 평균 수익률이 모두 높은 종목 중 매수한 종목',
+                      '적중률과 누적 수익이 모두 높은 종목 중 매수한 종목',
+                      '적중률과 수익난 매매횟수가 모두 높은 종목 중 매수한 종목',
+                    ][index],
+                    stock: ['삼성중공업', '삼성중공업', '이구산업'][index],
+                    stockNumber: ['010140', '010140', '025820'][index],
+                  ),
+                  CatchRecommendItem(
+                    icon: [
+                      FontAwesomeIcons.trophy,
+                      FontAwesomeIcons.trophy,
+                      FontAwesomeIcons.trophy,
+                    ][index],
+                    description: [
+                      '적중률과 평균 수익률이 모두 높은 종목 중 매도한 종목',
+                      '적중률과 누적 수익이 모두 높은 종목 중 매도한 종목',
+                      '적중률과 수익난 매매횟수가 모두 높은 종목 중 매도한 종목',
+                    ][index],
+                    stock: ['SOL 조선', 'SOL 조선', '에이블씨엔씨'][index],
+                    stockNumber: ['466920', '466920', '078520'][index],
+                  ),
+                ],
               );
             },
           ),

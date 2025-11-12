@@ -174,7 +174,22 @@ class _HomeTabContentState extends State<HomeTabContent> {
               ),
             ),
 
-            // 여유 공간
+            const SizedBox(height: 24),
+
+            // 회색 Divider
+            Container(height: 16, color: Colors.grey.shade100),
+
+            const SizedBox(height: 24),
+            // 급상승 Title
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              child: TitleBar(
+                title: "오늘의 이슈",
+                detailText: "더보기",
+                onDetailTap: () {},
+              ),
+            ),
+            // 하단 Banner
             Image.asset('assets/images/bottom_banner.jpg'),
           ],
         ),
