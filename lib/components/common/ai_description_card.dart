@@ -1,26 +1,103 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:rassi_clone/components/common/build_circle.dart';
 
-class AiDescriptionCard extends StatelessWidget {
+class AiDescriptionCard extends StatefulWidget {
   const AiDescriptionCard({super.key});
 
-  // 매수/매도 수치 비교해서 크기 비율 계산
+  @override
+  State<AiDescriptionCard> createState() => _AiDescriptionCardState();
+}
+
+class _AiDescriptionCardState extends State<AiDescriptionCard> {
+  static const Duration _autoScrollInterval = Duration(seconds: 4);
+  static const Duration _pageTransitionDuration = Duration(milliseconds: 400);
+  static const Curve _pageTransitionCurve = Curves.easeInOut;
+  static const Color _secondaryTextColor = Color(0xFF424242);
+  static const int _initialPageIndex = 1;
+
+  late PageController _pageController;
+  late Timer _timer;
+  int _currentPage = _initialPageIndex;
+
+  final List<Map<String, String>> _stockData = [
+    {'name': 'asd종목', 'status': '보유중', 'rate': '+50.6%', 'info': '(2일전 매수)'},
+    {'name': '삼성전자', 'status': '보유중', 'rate': '+12.3%', 'info': '(5일전 매수)'},
+    {'name': 'SK하이닉스', 'status': '보유중', 'rate': '-3.5%', 'info': '(1일전 매수)'},
+    {'name': '카카오', 'status': '보유중', 'rate': '+25.8%', 'info': '(3일전 매수)'},
+  ];
+
+  int get _totalCarouselPages => _stockData.length + 2;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController(initialPage: _initialPageIndex);
+    _startAutoScroll();
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  void _startAutoScroll() {
+    _timer = Timer.periodic(_autoScrollInterval, (timer) {
+      if (_pageController.hasClients) {
+        _currentPage++;
+        _pageController.animateToPage(
+          _currentPage,
+          duration: _pageTransitionDuration,
+          curve: _pageTransitionCurve,
+        );
+      }
+    });
+  }
+
+  void _handleInfiniteScroll(int index) {
+    final isRightEdge = index == _stockData.length + 1;
+    final isLeftEdge = index == 0;
+
+    if (isRightEdge) {
+      Future.delayed(_pageTransitionDuration, () {
+        if (mounted && _pageController.hasClients) {
+          _pageController.jumpToPage(1);
+          _currentPage = 1;
+        }
+      });
+    } else if (isLeftEdge) {
+      Future.delayed(_pageTransitionDuration, () {
+        if (mounted && _pageController.hasClients) {
+          _pageController.jumpToPage(_stockData.length);
+          _currentPage = _stockData.length;
+        }
+      });
+    }
+  }
+
+  Map<String, String> _getStockDataByIndex(int index) {
+    if (index == 0) {
+      return _stockData.last;
+    } else if (index == _stockData.length + 1) {
+      return _stockData.first;
+    } else {
+      return _stockData[index - 1];
+    }
+  }
+
   Map<String, double> _calculateSizes(int buyCount, int sellCount) {
     const double baseSize = 60.0;
 
     if (buyCount == sellCount) {
-      // 1:1 비율
       return {'buy': baseSize, 'sell': baseSize};
     } else if (buyCount > sellCount) {
-      // 3:2 비율
       return {'buy': baseSize * 1.3, 'sell': baseSize * 0.7};
     } else {
-      // 2:3 비율
       return {'buy': baseSize * 0.7, 'sell': baseSize * 1.3};
     }
   }
-
-  // Circle 위젯 생성 (내부에 라벨과 숫자)
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +133,10 @@ class AiDescriptionCard extends StatelessWidget {
                   Expanded(
                     child: Text(
                       'AI는 현재 데이터를 수집,학습에\n반영 중입니다.',
-                      style: TextStyle(fontSize: 14, color: Color(0xFF424242)),
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: _secondaryTextColor,
+                      ),
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -90,46 +170,72 @@ class AiDescriptionCard extends StatelessWidget {
               ),
             ),
             SizedBox(height: 8),
-            Container(
-              padding: EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: Color(0xFF424242).withValues(alpha: 0.05),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'asd종목',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  SizedBox(width: 8),
-                  Text(
-                    '보유중',
-                    style: TextStyle(fontSize: 14, color: Color(0xFF424242)),
-                  ),
-                  Text(
-                    '+50.6%',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.red,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  Text(
-                    '(2일전 매수)',
-                    style: TextStyle(fontSize: 14, color: Color(0xFF424242)),
-                  ),
-                ],
-              ),
-            ),
+            _buildStockCarousel(),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildStockCarousel() {
+    return Container(
+      height: 40,
+      padding: EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        color: _secondaryTextColor.withValues(alpha: 0.05),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: PageView.builder(
+        controller: _pageController,
+        itemCount: _totalCarouselPages,
+        onPageChanged: (index) {
+          setState(() {
+            _currentPage = index;
+          });
+          _handleInfiniteScroll(index);
+        },
+        itemBuilder: (context, index) {
+          final stock = _getStockDataByIndex(index);
+          return _buildStockItem(stock);
+        },
+      ),
+    );
+  }
+
+  Widget _buildStockItem(Map<String, String> stock) {
+    final isPositive = stock['rate']!.startsWith('+');
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          stock['name']!,
+          style: TextStyle(
+            fontSize: 14,
+            color: Colors.black,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        SizedBox(width: 8),
+        Text(
+          stock['status']!,
+          style: TextStyle(fontSize: 14, color: _secondaryTextColor),
+        ),
+        SizedBox(width: 4),
+        Text(
+          stock['rate']!,
+          style: TextStyle(
+            fontSize: 14,
+            color: isPositive ? Colors.red : Colors.blue,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        SizedBox(width: 4),
+        Text(
+          stock['info']!,
+          style: TextStyle(fontSize: 14, color: _secondaryTextColor),
+        ),
+      ],
     );
   }
 }
