@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rassi_clone/components/common/ai_description_card.dart';
+import 'package:rassi_clone/components/common/catch_recommend_card.dart';
 import 'package:rassi_clone/components/common/compare_card.dart';
 import 'package:rassi_clone/components/common/pickword_card.dart';
 import '../../components/common/title_bar.dart';
@@ -30,7 +31,7 @@ class _HomeTabContentState extends State<HomeTabContent> {
     return Container(
       color: Colors.white, // 흰색 배경
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 16.0),
+        padding: const EdgeInsets.only(top: 16.0),
         child: Column(
           children: [
             // 라씨데스크 Title
@@ -153,7 +154,7 @@ class _HomeTabContentState extends State<HomeTabContent> {
             // 종목 캐치 Contents
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24.0),
-              child: AiDescriptionCard(),
+              child: CatchRecommendCard(),
             ),
 
             const SizedBox(height: 24),
@@ -174,7 +175,7 @@ class _HomeTabContentState extends State<HomeTabContent> {
             ),
 
             // 여유 공간
-            const SizedBox(height: 100),
+            Image.asset('assets/images/bottom_banner.jpg'),
           ],
         ),
       ),
