@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rassi_clone/components/common/ai_description_card.dart';
 import 'package:rassi_clone/components/common/catch_recommend_card.dart';
+import 'package:rassi_clone/components/common/community_card.dart';
 import 'package:rassi_clone/components/common/compare_card.dart';
 import 'package:rassi_clone/components/common/pickword_card.dart';
 import '../../components/common/title_bar.dart';
@@ -96,7 +97,7 @@ class _HomeTabContentState extends State<HomeTabContent> {
             const SizedBox(height: 24),
 
             // 회색 Divider
-            Container(height: 16, color: Colors.grey.shade100),
+            Container(height: 12, color: Colors.grey.shade100),
 
             const SizedBox(height: 24),
 
@@ -118,7 +119,7 @@ class _HomeTabContentState extends State<HomeTabContent> {
             const SizedBox(height: 24),
 
             // 회색 Divider
-            Container(height: 16, color: Colors.grey.shade100),
+            Container(height: 12, color: Colors.grey.shade100),
 
             const SizedBox(height: 24),
 
@@ -137,7 +138,7 @@ class _HomeTabContentState extends State<HomeTabContent> {
             const SizedBox(height: 24),
 
             // 회색 Divider
-            Container(height: 16, color: Colors.grey.shade100),
+            Container(height: 12, color: Colors.grey.shade100),
 
             const SizedBox(height: 24),
 
@@ -160,7 +161,7 @@ class _HomeTabContentState extends State<HomeTabContent> {
             const SizedBox(height: 24),
 
             // 회색 Divider
-            Container(height: 16, color: Colors.grey.shade100),
+            Container(height: 12, color: Colors.grey.shade100),
 
             const SizedBox(height: 24),
 
@@ -173,11 +174,16 @@ class _HomeTabContentState extends State<HomeTabContent> {
                 onDetailTap: () {},
               ),
             ),
+            // 급상승 Contents
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              child: CommunityCard(),
+            ),
 
             const SizedBox(height: 24),
 
             // 회색 Divider
-            Container(height: 16, color: Colors.grey.shade100),
+            Container(height: 12, color: Colors.grey.shade100),
 
             const SizedBox(height: 24),
             // 급상승 Title
