@@ -21,7 +21,7 @@ class RassiSearchBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: isCollapsed 
+      child: isCollapsed
           ? _buildCollapsedSearchBar()
           : _buildExpandedSearchBar(),
     );
@@ -30,29 +30,29 @@ class RassiSearchBar extends StatelessWidget {
   Widget _buildExpandedSearchBar() {
     return Container(
       height: 44,
+      padding: const EdgeInsets.symmetric(horizontal: 12),
       decoration: BoxDecoration(
         color: Colors.grey[100],
-        borderRadius: BorderRadius.circular(22),
-        border: Border.all(color: Colors.grey[300]!),
+        borderRadius: BorderRadius.circular(8),
       ),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const SizedBox(width: 16),
-          const Icon(Icons.search, color: Colors.grey),
-          const SizedBox(width: 8),
           Expanded(
             child: TextField(
               controller: controller,
               onChanged: onChanged,
               onTap: onTap,
               decoration: const InputDecoration(
-                hintText: '종목명, 종목코드를 입력하세요',
+                hintText: 'AI매매신호와 종목정보를 검색하세요!',
                 border: InputBorder.none,
                 hintStyle: TextStyle(color: Colors.grey),
               ),
             ),
           ),
-          const SizedBox(width: 16),
+
+          const Icon(Icons.search, color: Colors.black),
         ],
       ),
     );
@@ -65,14 +65,11 @@ class RassiSearchBar extends StatelessWidget {
           width: 44,
           height: 44,
           decoration: BoxDecoration(
-            color: Colors.deepPurple.withOpacity(0.1),
+            color: Color(0xFF6665FD).withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(22),
           ),
           child: const Center(
-            child: Text(
-              AppConstants.appIcon,
-              style: TextStyle(fontSize: 20),
-            ),
+            child: Text(AppConstants.appIcon, style: TextStyle(fontSize: 20)),
           ),
         ),
         const SizedBox(width: 12),
