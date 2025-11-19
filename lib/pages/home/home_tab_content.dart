@@ -186,7 +186,8 @@ class _HomeTabContentState extends State<HomeTabContent> {
             Container(height: 12, color: Colors.grey.shade100),
 
             const SizedBox(height: 24),
-            // 급상승 Title
+
+            // 오늘의 이슈 Title
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24.0),
               child: TitleBar(
@@ -195,6 +196,10 @@ class _HomeTabContentState extends State<HomeTabContent> {
                 onDetailTap: () {},
               ),
             ),
+
+            // 오늘의 이슈 Components
+            
+            
             // 하단 Banner
             Image.asset('assets/images/bottom_banner.jpg'),
           ],

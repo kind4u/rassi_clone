@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rassi_clone/components/common/stock_info_item.dart';
 
 class CommunityCard extends StatefulWidget {
   const CommunityCard({super.key});
@@ -57,17 +58,10 @@ class _CommunityCardState extends State<CommunityCard> {
         SizedBox(height: 20),
 
         // 활동 급상승 컨텐츠들
-        Text(
-          _sliderValue == 0.0
-              ? '2시간 전 활동 데이터'
-              : _sliderValue <= 1 / 3
-              ? '1시간 전 활동 데이터'
-              : '현재 활동 데이터',
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-            color: _primaryColor,
-          ),
+        StockInfoItem(
+          stockName: "asd",
+          stockNumber: "123123",
+          stockValue: "123",
         ),
       ],
     );
