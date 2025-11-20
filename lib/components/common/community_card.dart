@@ -13,12 +13,47 @@ class _CommunityCardState extends State<CommunityCard> {
   static const Color _primaryColor = Color(0xFF6566FE);
   static const Color _secondaryColor = Color(0xFFDFD4FE);
 
+  // 시간대별 종목 데이터
+  static const List<Map<String, String>> _twoHoursAgoStocks = [
+    {'name': '삼성전자', 'number': '005930', 'value': '+1.5'},
+    {'name': 'SK하이닉스', 'number': '000660'},
+    {'name': '현대차', 'number': '005380', 'value': '+0.3'},
+  ];
+
+  static const List<Map<String, String>> _oneHourAgoStocks = [
+    {'name': 'NAVER', 'number': '035420', 'value': '+2.3'},
+    {'name': '카카오', 'number': '035720', 'value': '-1.2'},
+    {'name': 'LG에너지솔루션', 'number': '373220', 'value': '+1.8'},
+  ];
+
+  static const List<Map<String, String>> _nowStocks = [
+    {'name': '삼성바이오로직스', 'number': '207940', 'value': '+3.5'},
+    {'name': '셀트리온', 'number': '068270', 'value': '-2.1'},
+    {'name': 'POSCO홀딩스', 'number': '005490', 'value': '+0.7'},
+  ];
+
   double _sliderValue = _maxValue;
 
   String _getTimeLabel(double value) {
     if (value == 0.0) return '2시간전';
     if (value < 0.5) return '1시간전';
     return '0시간전';
+  }
+
+  List<Map<String, String>> _getCurrentStocks() {
+    if (_sliderValue == 0.0) return _twoHoursAgoStocks;
+    if (_sliderValue <= 0.5) return _oneHourAgoStocks;
+    return _nowStocks;
+  }
+
+  List<Widget> _buildStockItems(List<Map<String, String>> stocks) {
+    return stocks.map((stock) {
+      return StockInfoItem(
+        stockName: stock['name']!,
+        stockNumber: stock['number']!,
+        stockValue: stock['value'],
+      );
+    }).toList();
   }
 
   @override
@@ -58,11 +93,7 @@ class _CommunityCardState extends State<CommunityCard> {
         SizedBox(height: 20),
 
         // 활동 급상승 컨텐츠들
-        StockInfoItem(
-          stockName: "asd",
-          stockNumber: "123123",
-          stockValue: "123",
-        ),
+        Column(spacing: 8, children: _buildStockItems(_getCurrentStocks())),
       ],
     );
   }
