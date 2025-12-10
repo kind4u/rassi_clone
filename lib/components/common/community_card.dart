@@ -13,7 +13,7 @@ class _CommunityCardState extends State<CommunityCard> {
   static const Color _primaryColor = Color(0xFF6566FE);
   static const Color _secondaryColor = Color(0xFFDFD4FE);
 
-  // 시간대별 종목 데이터
+  // 시간대별 종목 데이터(하드코딩)
   static const List<Map<String, String>> _twoHoursAgoStocks = [
     {'name': '삼성전자', 'number': '005930', 'value': '+1.5'},
     {'name': 'SK하이닉스', 'number': '000660'},

@@ -4,6 +4,7 @@ import 'package:rassi_clone/components/common/catch_recommend_card.dart';
 import 'package:rassi_clone/components/common/community_card.dart';
 import 'package:rassi_clone/components/common/compare_card.dart';
 import 'package:rassi_clone/components/common/pickword_card.dart';
+import 'package:rassi_clone/components/common/today_issue_component.dart';
 import '../../components/common/title_bar.dart';
 import '../../components/common/desk_component.dart';
 import '../../components/common/page_tab_view.dart';
@@ -198,8 +199,12 @@ class _HomeTabContentState extends State<HomeTabContent> {
             ),
 
             // 오늘의 이슈 Components
-            
-            
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: TodayIssueComponent(),
+            ),
+
+            const SizedBox(height: 24),
             // 하단 Banner
             Image.asset('assets/images/bottom_banner.jpg'),
           ],
