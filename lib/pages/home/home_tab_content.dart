@@ -8,6 +8,7 @@ import 'package:rassi_clone/components/common/today_issue_component.dart';
 import '../../components/common/title_bar.dart';
 import '../../components/common/desk_component.dart';
 import '../../components/common/page_tab_view.dart';
+import '../../models/stock_models.dart';
 
 /// 홈 탭의 콘텐츠를 담당하는 위젯
 class HomeTabContent extends StatefulWidget {
@@ -26,6 +27,35 @@ class _HomeTabContentState extends State<HomeTabContent> {
     "중형주 보기",
     "소형주 보기",
     "신규상장 보기",
+  ];
+
+  // 오늘의 이슈 샘플 데이터
+  final List<TodayIssue> _todayIssues = const [
+    TodayIssue(
+      title: "반도체 업계 수출 호조",
+      content: "삼성전자와 SK하이닉스를 중심으로 한 반도체 업계의 수출이 크게 증가하면서 관련 주가가 상승세를 보이고 있습니다.",
+      signalType: IssueSignalType.up,
+    ),
+    TodayIssue(
+      title: "금리 동결 전망",
+      content: "중앙은행의 금리 동결 가능성이 높아지면서 시장이 안정세를 유지하고 있습니다.",
+      signalType: IssueSignalType.neutral,
+    ),
+    TodayIssue(
+      title: "자동차 판매 부진",
+      content: "글로벌 경기 둔화로 자동차 판매가 감소하면서 완성차 업체들의 실적 우려가 커지고 있습니다.",
+      signalType: IssueSignalType.down,
+    ),
+    TodayIssue(
+      title: "바이오 신약 승인",
+      content: "국내 바이오 기업의 신약이 FDA 승인을 받으면서 관련 종목이 급등하고 있습니다.",
+      signalType: IssueSignalType.up,
+    ),
+    TodayIssue(
+      title: "배터리 소재 공급 증가",
+      content: "전기차 시장 성장에 따라 배터리 소재 공급이 증가하면서 관련 업체들의 수익성이 개선되고 있습니다.",
+      signalType: IssueSignalType.up,
+    ),
   ];
 
   @override
@@ -201,7 +231,7 @@ class _HomeTabContentState extends State<HomeTabContent> {
             // 오늘의 이슈 Components
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: TodayIssueComponent(),
+              child: TodayIssueComponent(issues: _todayIssues),
             ),
 
             const SizedBox(height: 24),
