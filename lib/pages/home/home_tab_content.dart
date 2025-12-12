@@ -32,29 +32,44 @@ class _HomeTabContentState extends State<HomeTabContent> {
   // 오늘의 이슈 샘플 데이터
   final List<TodayIssue> _todayIssues = const [
     TodayIssue(
-      title: "반도체 업계 수출 호조",
-      content: "삼성전자와 SK하이닉스를 중심으로 한 반도체 업계의 수출이 크게 증가하면서 관련 주가가 상승세를 보이고 있습니다.",
+      category: "전선",
+      title: "AI • 전기차發 구리 슈퍼사이클 •••ETF•선물시장도 '과열 경고등'",
+      content:
+          "인공지능 (AI) 데이터센터와 전기차, 재생에너지 확산이 '구리 슈퍼사이클'을 이끌고 있다. 일각에서는 이번 상승을 단순한 호황으로 볼 것이 아니라, 금융상품으로 쏠린 자금과 산업 전반의 비용 부담 그리고 장기 투자 위축이 맞물려 경기 불안을 키울 수 있다는 지적이다.",
       signalType: IssueSignalType.up,
+      tags: ["LS마린솔루", "대원전선", "가온전선"],
     ),
     TodayIssue(
-      title: "금리 동결 전망",
-      content: "중앙은행의 금리 동결 가능성이 높아지면서 시장이 안정세를 유지하고 있습니다.",
+      category: "로봇",
+      title: "'로봇도 현대차'정의선의 승부수, 연 3만대 찍는 공장 띄웠다",
+      content:
+          "현대자동차그룹이 차세대 승부수로 '로봇 카드'를 빼들었다. 11일 자동차업계에 따르면 현대차 그룹은 2028년 가동을 목표로 미국 조지아나 엘라배마주 인근에 휴머녿이드 로봇 전용 공장 설립을 추진 중이다. 연간 생산 규모는 3만대 안팎이다.",
+      signalType: IssueSignalType.up,
+      tags: ["클로봇", "TPC", "서진오토모티"],
+    ),
+    TodayIssue(
+      category: "보험",
+      title: "삼성화재, 장 막판 28% 급등... 주문 실수인가 리밸런싱인가",
+      content:
+          "삼성화재(000810) 주가가 장 마감 직전 돌연 28% 급등했다. 삼성화재 주가는 최근 1년여 간 줄곧 55만원 이하를 유지했지만 이날 오후3시 20분에 갑작스레 상한가 가까이 치솟으며 63만원에 장을 마쳤다. 정규장 이후 이어지는 넥스트레이드(NXT) 애프터마켓에서는 전 거래일 종가 대비 7% 가량 높은 52만 원 대에 손바뀜 되는 중이다.",
       signalType: IssueSignalType.neutral,
+      tags: ["코리안리", "한화생명", "한화손해보험"],
     ),
     TodayIssue(
-      title: "자동차 판매 부진",
-      content: "글로벌 경기 둔화로 자동차 판매가 감소하면서 완성차 업체들의 실적 우려가 커지고 있습니다.",
+      category: "반도체",
+      title: "브로드컴, 또 어닝 서프라이즈... \"AI 칩 매출, 두 배 늘 것\"",
+      content:
+          "브로드컴이 11일(현지시간) 시장 전망을 웃도는 4분기 실적을 발표하고, 인공지능(AI) 수요 확대를 반영한 강한 분기 전망을 제시했다. 회사 측은 현재 분기 AI칩 매출이 전년 대비 두 배 수준으로 늘어날 것이라고 밝혔다.",
       signalType: IssueSignalType.down,
+      tags: ["와이제이링크", "넥스트칩", "엠디바이스"],
     ),
     TodayIssue(
-      title: "바이오 신약 승인",
-      content: "국내 바이오 기업의 신약이 FDA 승인을 받으면서 관련 종목이 급등하고 있습니다.",
-      signalType: IssueSignalType.up,
-    ),
-    TodayIssue(
-      title: "배터리 소재 공급 증가",
-      content: "전기차 시장 성장에 따라 배터리 소재 공급이 증가하면서 관련 업체들의 수익성이 개선되고 있습니다.",
-      signalType: IssueSignalType.up,
+      category: "제약 바이오",
+      title: "할로자임, MSD 이어 알테오젠 '정조준' 美서 핵심 특허 무효화 공세",
+      content:
+          "글로벌 피하주사(SC) 제형 변경 기술 시장을 둘러싼 특허 전쟁이 난타전 양상으로 치닫고 있다. 미국 머크(이하 MSD)가 SC 제형 변경 분야의 선두 주자인 할로자임 테라퓨틱스(Halozyme THerapeutics, 이하 할로자임)의 특허 장벽을 허물기 위해 전방위 공세를 펼침",
+      signalType: IssueSignalType.down,
+      tags: ["소룩스", "에임드바이오", "삼성에피스홀"],
     ),
   ];
 

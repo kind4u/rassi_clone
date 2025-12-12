@@ -18,10 +18,7 @@ class NewsItem {
   final String title;
   final String time;
 
-  const NewsItem({
-    required this.title,
-    required this.time,
-  });
+  const NewsItem({required this.title, required this.time});
 }
 
 // 시장 지수 정보를 담는 모델
@@ -61,13 +58,17 @@ enum IssueSignalType { up, neutral, down }
 
 // 오늘의 이슈 정보를 담는 모델
 class TodayIssue {
+  final String category;
   final String title;
   final String content;
   final IssueSignalType signalType;
+  final List<String> tags;
 
   const TodayIssue({
+    required this.category,
     required this.title,
     required this.content,
     required this.signalType,
+    required this.tags,
   });
 }

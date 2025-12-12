@@ -6,16 +6,12 @@ class AISignalListItem extends StatelessWidget {
   final AISignal signal;
   final VoidCallback? onTap;
 
-  const AISignalListItem({
-    super.key,
-    required this.signal,
-    this.onTap,
-  });
+  const AISignalListItem({super.key, required this.signal, this.onTap});
 
   @override
   Widget build(BuildContext context) {
     final color = _getColorBySignalType(signal.type);
-    
+
     return InkWell(
       onTap: onTap,
       child: Padding(
@@ -25,17 +21,17 @@ class AISignalListItem extends StatelessWidget {
           children: [
             Text(
               signal.stockName,
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-              ),
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
             ),
             Row(
               children: [
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
                   decoration: BoxDecoration(
-                    color: color.withOpacity(0.1),
+                    color: color.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
@@ -50,10 +46,7 @@ class AISignalListItem extends StatelessWidget {
                 const SizedBox(width: 8),
                 Text(
                   signal.description,
-                  style: const TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey,
-                  ),
+                  style: const TextStyle(fontSize: 12, color: Colors.grey),
                 ),
               ],
             ),

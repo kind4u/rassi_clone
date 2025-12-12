@@ -12,13 +12,13 @@ class StockCatchTabContent extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           children: [
-        _buildStockCatch(),
-        const SizedBox(height: 16),
-        _buildTrendingStocks(),
-        const SizedBox(height: 16),
-        _buildBreakoutStocks(),
-        const SizedBox(height: 100),
-      ],
+            _buildStockCatch(),
+            const SizedBox(height: 16),
+            _buildTrendingStocks(),
+            const SizedBox(height: 16),
+            _buildBreakoutStocks(),
+            const SizedBox(height: 100),
+          ],
         ),
       ),
     );
@@ -81,10 +81,7 @@ class StockCatchTabContent extends StatelessWidget {
           Expanded(
             child: Text(
               stocks,
-              style: const TextStyle(
-                fontSize: 14,
-                color: Colors.grey,
-              ),
+              style: const TextStyle(fontSize: 14, color: Colors.grey),
               textAlign: TextAlign.end,
             ),
           ),
@@ -93,7 +90,12 @@ class StockCatchTabContent extends StatelessWidget {
     );
   }
 
-  Widget _buildTrendingItem(String stock, String trend, String change, Color color) {
+  Widget _buildTrendingItem(
+    String stock,
+    String trend,
+    String change,
+    Color color,
+  ) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
@@ -101,17 +103,14 @@ class StockCatchTabContent extends StatelessWidget {
         children: [
           Text(
             stock,
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
-            ),
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
           ),
           Row(
             children: [
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
-                  color: color.withOpacity(0.1),
+                  color: color.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Text(
@@ -157,19 +156,13 @@ class StockCatchTabContent extends StatelessWidget {
               ),
               Text(
                 pattern,
-                style: const TextStyle(
-                  fontSize: 12,
-                  color: Colors.grey,
-                ),
+                style: const TextStyle(fontSize: 12, color: Colors.grey),
               ),
             ],
           ),
           Text(
             price,
-            style: const TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-            ),
+            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
           ),
         ],
       ),

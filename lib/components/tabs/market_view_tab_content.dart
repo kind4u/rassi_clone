@@ -12,13 +12,13 @@ class MarketViewTabContent extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           children: [
-        _buildGlobalMarket(),
-        const SizedBox(height: 16),
-        _buildMarketAnalysis(),
-        const SizedBox(height: 16),
-        _buildGlobalIndices(),
-        const SizedBox(height: 100),
-      ],
+            _buildGlobalMarket(),
+            const SizedBox(height: 16),
+            _buildMarketAnalysis(),
+            const SizedBox(height: 16),
+            _buildGlobalIndices(),
+            const SizedBox(height: 100),
+          ],
         ),
       ),
     );
@@ -72,10 +72,7 @@ class MarketViewTabContent extends StatelessWidget {
         children: [
           Text(
             market,
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
-            ),
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
           ),
           Text(
             trend,
@@ -90,7 +87,11 @@ class MarketViewTabContent extends StatelessWidget {
     );
   }
 
-  Widget _buildAnalysisItem(String category, String status, String description) {
+  Widget _buildAnalysisItem(
+    String category,
+    String status,
+    String description,
+  ) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
@@ -108,10 +109,7 @@ class MarketViewTabContent extends StatelessWidget {
               ),
               Text(
                 description,
-                style: const TextStyle(
-                  fontSize: 12,
-                  color: Colors.grey,
-                ),
+                style: const TextStyle(fontSize: 12, color: Colors.grey),
               ),
             ],
           ),
@@ -119,10 +117,10 @@ class MarketViewTabContent extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             decoration: BoxDecoration(
               color: status == '강세'
-                  ? Colors.red.withOpacity(0.1)
+                  ? Colors.red.withValues(alpha: 0.1)
                   : status == '약세'
-                      ? Colors.blue.withOpacity(0.1)
-                      : Colors.grey.withOpacity(0.1),
+                  ? Colors.blue.withValues(alpha: 0.1)
+                  : Colors.grey.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Text(
@@ -132,8 +130,8 @@ class MarketViewTabContent extends StatelessWidget {
                 color: status == '강세'
                     ? Colors.red
                     : status == '약세'
-                        ? Colors.blue
-                        : Colors.grey,
+                    ? Colors.blue
+                    : Colors.grey,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -143,7 +141,12 @@ class MarketViewTabContent extends StatelessWidget {
     );
   }
 
-  Widget _buildIndexItem(String name, String value, String change, Color color) {
+  Widget _buildIndexItem(
+    String name,
+    String value,
+    String change,
+    Color color,
+  ) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
@@ -151,10 +154,7 @@ class MarketViewTabContent extends StatelessWidget {
         children: [
           Text(
             name,
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
-            ),
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
           ),
           Row(
             children: [

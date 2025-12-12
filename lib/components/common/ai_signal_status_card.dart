@@ -13,7 +13,7 @@ class AISignalStatusCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(8.0),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withOpacity(0.2),
+              color: Colors.grey.withValues(alpha: 0.2),
               spreadRadius: 1,
               blurRadius: 4,
               offset: const Offset(0, 2),
@@ -30,10 +30,7 @@ class AISignalStatusCard extends StatelessWidget {
                   flex: 3,
                   child: Text(
                     'AI는 현재 데이터를 수집, 학습에 반영중입니다.',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.grey[700],
-                    ),
+                    style: TextStyle(fontSize: 14, color: Colors.grey[700]),
                   ),
                 ),
                 const SizedBox(width: 16),
@@ -68,18 +65,12 @@ class AISignalStatusCard extends StatelessWidget {
                 children: [
                   const Text(
                     '신성이엔지',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
-                    ),
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
                   ),
                   const SizedBox(width: 8),
                   const Text(
                     '보유중',
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.black54,
-                    ),
+                    style: TextStyle(fontSize: 12, color: Colors.black54),
                   ),
                   const Spacer(),
                   const Text(
@@ -93,10 +84,7 @@ class AISignalStatusCard extends StatelessWidget {
                   const SizedBox(width: 8),
                   const Text(
                     '(1일전 매수)',
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.black54,
-                    ),
+                    style: TextStyle(fontSize: 12, color: Colors.black54),
                   ),
                 ],
               ),
@@ -115,10 +103,7 @@ class AISignalStatusCard extends StatelessWidget {
     return Container(
       width: 60,
       height: 60,
-      decoration: BoxDecoration(
-        color: color,
-        shape: BoxShape.circle,
-      ),
+      decoration: BoxDecoration(color: color, shape: BoxShape.circle),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

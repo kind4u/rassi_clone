@@ -40,7 +40,13 @@ class TodayIssueCard extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("test text"),
+                    Text(
+                      issue.category,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
 
                     _buildSignalIndicator(issue.signalType),
                   ],
@@ -52,23 +58,49 @@ class TodayIssueCard extends StatelessWidget {
                 Text(
                   issue.title,
                   style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
                   ),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height: 8),
 
                 // 컨텐츠
                 Expanded(
-                  child: Text(
-                    issue.content,
-                    style: const TextStyle(fontSize: 14, color: Colors.grey),
-                    maxLines: 5,
-                    overflow: TextOverflow.ellipsis,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        issue.content,
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w300,
+                        ),
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+
+                      SizedBox(height: 8),
+                      // 태그
+                      Wrap(
+                        spacing: 6,
+                        children: issue.tags
+                            .map(
+                              (tag) => Text(
+                                '#$tag',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Color(0xFF6665FD),
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                            )
+                            .toList(),
+                      ),
+                    ],
                   ),
                 ),
+
+                const SizedBox(height: 12),
               ],
             ),
           ),
