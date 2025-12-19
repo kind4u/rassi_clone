@@ -72,3 +72,25 @@ class TodayIssue {
     required this.tags,
   });
 }
+
+// 대중 신호 상태 (관망중/보유중)
+enum PopulationStatus { watching, holding }
+
+// 대중 신호 정보를 담는 모델
+class PopulationSignal {
+  final String stockName;
+  final String stockCode;
+  final PopulationStatus status;
+  final int? watchingDays; // 관망 중일 때만 사용
+  final String? purchasePrice; // 보유 중일 때만 사용
+  final String? returnRate; // 보유 중일 때만 사용 (예: "+15.2%")
+
+  const PopulationSignal({
+    required this.stockName,
+    required this.stockCode,
+    required this.status,
+    this.watchingDays,
+    this.purchasePrice,
+    this.returnRate,
+  });
+}

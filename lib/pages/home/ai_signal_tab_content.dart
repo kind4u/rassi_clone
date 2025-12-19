@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:rassi_clone/components/common/ai_description_card.dart';
 import 'package:rassi_clone/components/common/ai_description_detail_card.dart';
 import 'package:rassi_clone/components/common/page_tab_view.dart';
+import 'package:rassi_clone/components/common/population_signal_card.dart';
 import '../../components/common/title_bar.dart';
 
 /// AI 매매신호 탭
@@ -90,6 +91,10 @@ class _AISignalTabContentState extends State<AISignalTabContent> {
             ),
 
             // population signal contents
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: PopulationSignalCard(),
+            ),
 
             // padding + divider
             const SizedBox(height: 24),
