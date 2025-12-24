@@ -3,6 +3,7 @@ import 'package:rassi_clone/components/common/ai_description_card.dart';
 import 'package:rassi_clone/components/common/ai_description_detail_card.dart';
 import 'package:rassi_clone/components/common/page_tab_view.dart';
 import 'package:rassi_clone/components/common/population_signal_card.dart';
+import 'package:rassi_clone/components/common/story_card.dart';
 import '../../components/common/title_bar.dart';
 
 /// AI 매매신호 탭
@@ -96,6 +97,27 @@ class _AISignalTabContentState extends State<AISignalTabContent> {
               child: PopulationSignalCard(),
             ),
 
+            // population signal view more component
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: Container(
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(vertical: 12.0),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8.0),
+                  border: Border.all(
+                    color: Colors.grey, // 테두리 색상
+                    width: 1.0, // 테두리 두께
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [Text("인기종목 더보기")],
+                ),
+              ),
+            ),
+
             // padding + divider
             const SizedBox(height: 24),
             Container(height: 12, color: Colors.grey.shade100),
@@ -108,6 +130,31 @@ class _AISignalTabContentState extends State<AISignalTabContent> {
             ),
 
             // story contents
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: StoryCard(),
+            ),
+
+            // story view more contents
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: Container(
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(vertical: 12.0),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8.0),
+                  border: Border.all(
+                    color: Colors.grey, // 테두리 색상
+                    width: 1.0, // 테두리 두께
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [Text("스토리 더보기")],
+                ),
+              ),
+            ),
 
             // padding + divider
             const SizedBox(height: 24),
