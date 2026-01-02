@@ -21,89 +21,107 @@ class PopulationSignalComponent extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // 왼쪽: 상태 배지 + 주식 정보
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // 상태 배지
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8,
-                      vertical: 4,
-                    ),
-                    decoration: BoxDecoration(
-                      color: statusColor.withValues(alpha: 0.1),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Text(
-                      statusText,
-                      style: TextStyle(
-                        fontSize: 11,
-                        color: statusColor,
-                        fontWeight: FontWeight.bold,
+        padding: const EdgeInsets.symmetric(vertical: 12.0),
+        child: Container(
+          padding: EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(8.0),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.1),
+                spreadRadius: 6,
+                blurRadius: 8,
+                offset: const Offset(0, 0),
+              ),
+            ],
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // 왼쪽: 상태 배지 + 주식 정보
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // 상태 배지
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 4,
+                      ),
+                      decoration: BoxDecoration(
+                        color: statusColor.withValues(alpha: 0.1),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Text(
+                        statusText,
+                        style: TextStyle(
+                          fontSize: 11,
+                          color: statusColor,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(height: 8),
-                  // 주식 이름
-                  Text(
-                    signal.stockName,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
+                    const SizedBox(height: 8),
+                    // 주식 이름
+                    Text(
+                      signal.stockName,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 4),
-                  // 종목 코드
-                  Text(
-                    signal.stockCode,
-                    style: const TextStyle(fontSize: 12, color: Colors.grey),
-                  ),
+                    const SizedBox(height: 4),
+                    // 종목 코드
+                    Text(
+                      signal.stockCode,
+                      style: const TextStyle(fontSize: 12, color: Colors.grey),
+                    ),
+                  ],
+                ),
+              ),
+              // 오른쪽: 관망 일수 또는 보유 정보
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  if (isWatching && signal.watchingDays != null) ...[
+                    Text(
+                      '관망 ${signal.watchingDays}일차',
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ] else if (!isWatching) ...[
+                    // 수익률
+                    if (signal.returnRate != null)
+                      Text(
+                        signal.returnRate!,
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: signal.returnRate!.startsWith('+')
+                              ? Colors.red
+                              : Colors.blue,
+                        ),
+                      ),
+                    const SizedBox(height: 4),
+                    // 매수가
+                    if (signal.purchasePrice != null)
+                      Text(
+                        signal.purchasePrice!,
+                        style: const TextStyle(
+                          fontSize: 13,
+                          color: Colors.grey,
+                        ),
+                      ),
+                  ],
                 ],
               ),
-            ),
-            // 오른쪽: 관망 일수 또는 보유 정보
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                if (isWatching && signal.watchingDays != null) ...[
-                  Text(
-                    '관망 ${signal.watchingDays}일차',
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.grey,
-                    ),
-                  ),
-                ] else if (!isWatching) ...[
-                  // 수익률
-                  if (signal.returnRate != null)
-                    Text(
-                      signal.returnRate!,
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: signal.returnRate!.startsWith('+')
-                            ? Colors.red
-                            : Colors.blue,
-                      ),
-                    ),
-                  const SizedBox(height: 4),
-                  // 매수가
-                  if (signal.purchasePrice != null)
-                    Text(
-                      signal.purchasePrice!,
-                      style: const TextStyle(fontSize: 13, color: Colors.grey),
-                    ),
-                ],
-              ],
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
