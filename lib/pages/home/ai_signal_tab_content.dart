@@ -91,11 +91,15 @@ class _AISignalTabContentState extends State<AISignalTabContent> {
               child: TitleBar(title: "인기 종목의 AI매매신호", onDetailTap: () {}),
             ),
 
+            SizedBox(height: 12),
+
             // population signal contents
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
               child: PopulationSignalCard(),
             ),
+
+            SizedBox(height: 12),
 
             // population signal view more component
             Padding(
