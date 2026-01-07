@@ -96,12 +96,36 @@ class PopulationSignalComponent extends StatelessWidget {
                 children: [
                   // 관망중일때
                   if (isWatching && signal.watchingDays != null) ...[
-                    Text(
-                      '관망 ${signal.watchingDays}일차',
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.grey,
+                    Text.rich(
+                      TextSpan(
+                        children: [
+                          TextSpan(
+                            text: '관망 ',
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.grey,
+                            ),
+                          ),
+
+                          TextSpan(
+                            text: signal.watchingDays!.toString(),
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black,
+                            ),
+                          ),
+
+                          TextSpan(
+                            text: '일째',
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     // 보유중일때

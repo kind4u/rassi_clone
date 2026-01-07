@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rassi_clone/components/common/ai_description_card.dart';
 import 'package:rassi_clone/components/common/ai_description_detail_card.dart';
+import 'package:rassi_clone/components/common/ai_filter_items.dart';
 import 'package:rassi_clone/components/common/page_tab_view.dart';
 import 'package:rassi_clone/components/common/population_signal_card.dart';
 import 'package:rassi_clone/components/common/story_card.dart';
@@ -172,6 +173,15 @@ class _AISignalTabContentState extends State<AISignalTabContent> {
             ),
 
             // filter contents
+            Padding(
+              // horizontal + top
+              padding: const EdgeInsets.only(
+                top: 12.0,
+                left: 24.0,
+                right: 24.0,
+              ),
+              child: AiFilterItems(),
+            ),
 
             // padding + divider
             const SizedBox(height: 24),

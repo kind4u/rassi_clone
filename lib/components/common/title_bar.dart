@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 class TitleBar extends StatelessWidget {
   final String title;
   final String? detailText;
+  final double? titleSize;
   final VoidCallback? onDetailTap;
   final Color? titleColor;
   final Color? detailColor;
@@ -16,6 +17,7 @@ class TitleBar extends StatelessWidget {
     this.onDetailTap,
     this.titleColor,
     this.detailColor,
+    this.titleSize,
   });
 
   @override
@@ -26,7 +28,7 @@ class TitleBar extends StatelessWidget {
         Text(
           title,
           style: TextStyle(
-            fontSize: 18,
+            fontSize: titleSize ?? 18,
             fontWeight: FontWeight.bold,
             color: titleColor ?? Colors.black,
           ),
