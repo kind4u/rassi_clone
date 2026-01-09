@@ -4,6 +4,7 @@ import 'package:rassi_clone/components/common/ai_description_detail_card.dart';
 import 'package:rassi_clone/components/common/ai_filter_items.dart';
 import 'package:rassi_clone/components/common/page_tab_view.dart';
 import 'package:rassi_clone/components/common/population_signal_card.dart';
+import 'package:rassi_clone/components/common/signal_combine_card.dart';
 import 'package:rassi_clone/components/common/story_card.dart';
 import '../../components/common/title_bar.dart';
 
@@ -194,7 +195,32 @@ class _AISignalTabContentState extends State<AISignalTabContent> {
               child: TitleBar(title: "매매신호 종합보드", onDetailTap: () {}),
             ),
 
-            // conbine board contents
+            // combine board contents
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              child: SignalCombineCard(),
+            ),
+
+            // combine board view more contents
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: Container(
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(vertical: 12.0),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8.0),
+                  border: Border.all(
+                    color: Colors.grey.shade400, // 테두리 색상
+                    width: 1.0, // 테두리 두께
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [Text("종합보드 더보기")],
+                ),
+              ),
+            ),
 
             // padding + divider
             const SizedBox(height: 24),
