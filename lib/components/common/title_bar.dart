@@ -9,6 +9,10 @@ class TitleBar extends StatelessWidget {
   final VoidCallback? onDetailTap;
   final Color? titleColor;
   final Color? detailColor;
+  final IconData? detailIcon;
+  final Color? detailIconColor;
+  final double? detailTextSize;
+  final double? detailIconSize;
 
   const TitleBar({
     super.key,
@@ -18,6 +22,10 @@ class TitleBar extends StatelessWidget {
     this.titleColor,
     this.detailColor,
     this.titleSize,
+    this.detailIcon,
+    this.detailIconColor,
+    this.detailTextSize,
+    this.detailIconSize,
   });
 
   @override
@@ -33,15 +41,30 @@ class TitleBar extends StatelessWidget {
             color: titleColor ?? Colors.black,
           ),
         ),
-        if (detailText != null)
+        if (detailText != null || detailIcon != null)
           GestureDetector(
             onTap: onDetailTap,
-            child: Text(
-              detailText!,
-              style: TextStyle(
-                fontSize: 14,
-                color: detailColor ?? Colors.grey[400], // lightGray로 변경
-              ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (detailIcon != null)
+                  Padding(
+                    padding: const EdgeInsets.only(right: 4.0),
+                    child: Icon(
+                      detailIcon,
+                      size: detailIconSize ?? 16,
+                      color: detailIconColor ?? Colors.grey[400],
+                    ),
+                  ),
+                if (detailText != null)
+                  Text(
+                    detailText!,
+                    style: TextStyle(
+                      fontSize: detailTextSize ?? 14,
+                      color: detailColor ?? Colors.grey[400],
+                    ),
+                  ),
+              ],
             ),
           ),
       ],

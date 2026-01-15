@@ -230,7 +230,13 @@ class _AISignalTabContentState extends State<AISignalTabContent> {
             // results TOP title
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24.0),
-              child: TitleBar(title: "성과 TOP 종목", onDetailTap: () {}),
+              child: TitleBar(
+                title: "성과 TOP 종목",
+                detailIcon: Icons.help_outline,
+                detailIconColor: Colors.grey,
+                detailIconSize: 24,
+                onDetailTap: () {},
+              ),
             ),
 
             // results TOP contents
