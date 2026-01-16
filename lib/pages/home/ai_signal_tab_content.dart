@@ -4,6 +4,7 @@ import 'package:rassi_clone/components/common/ai_description_detail_card.dart';
 import 'package:rassi_clone/components/common/ai_filter_items.dart';
 import 'package:rassi_clone/components/common/page_tab_view.dart';
 import 'package:rassi_clone/components/common/population_signal_card.dart';
+import 'package:rassi_clone/components/common/result_top_card.dart';
 import 'package:rassi_clone/components/common/signal_combine_card.dart';
 import 'package:rassi_clone/components/common/story_card.dart';
 import '../../components/common/title_bar.dart';
@@ -240,6 +241,10 @@ class _AISignalTabContentState extends State<AISignalTabContent> {
             ),
 
             // results TOP contents
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              child: ResultTopCard(),
+            ),
 
             // padding
             const SizedBox(height: 24),
