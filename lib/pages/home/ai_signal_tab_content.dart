@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:rassi_clone/components/common/ai_description_card.dart';
 import 'package:rassi_clone/components/common/ai_description_detail_card.dart';
 import 'package:rassi_clone/components/common/ai_filter_items.dart';
 import 'package:rassi_clone/components/common/page_tab_view.dart';
