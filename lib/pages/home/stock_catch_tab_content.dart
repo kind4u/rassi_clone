@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rassi_clone/components/common/ai_description_detail_card.dart';
+import 'package:rassi_clone/components/common/etf_stock_catch_component.dart';
 import 'package:rassi_clone/components/common/title_bar.dart';
 import 'package:rassi_clone/components/common/whale_stock_catch_component.dart';
 
@@ -86,6 +87,7 @@ class StockCatchTabContent extends StatelessWidget {
         children: [
           TitleBar(title: "ETF 종목캐치", onDetailTap: () {}),
 
+          EtfStockCatchComponent(),
           TitleBar(title: "인기 ETF", onDetailTap: () {}),
         ],
       ),
