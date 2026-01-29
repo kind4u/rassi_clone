@@ -89,123 +89,23 @@ class _EtfStockCatchComponentState extends State<EtfStockCatchComponent> {
           ),
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 20.0),
-            child: Column(
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "원익큐브 ",
+                      'KoAct 미국나스닥채',
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 24,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Text(
-                      "014190",
-                      style: TextStyle(fontSize: 14, color: Colors.grey),
-                    ),
-                  ],
-                ),
-
-                SizedBox(height: 12.0),
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Column(
+                    Row(
                       children: [
-                        Container(
-                          width: 140,
-                          decoration: BoxDecoration(
-                            color: Color(0xFF6665FD),
-                            borderRadius: BorderRadius.circular(999.0),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 4.0,
-                              horizontal: 32.0,
-                            ),
-                            child: Text(
-                              "라씨 매수",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 4),
-                        Text.rich(
-                          TextSpan(
-                            children: [
-                              TextSpan(
-                                // 주식 가격 data
-                                text: '2,045',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                              TextSpan(
-                                text: '원',
-                                style: TextStyle(fontSize: 14),
-                              ),
-                            ],
-                          ),
-                        ),
-
-                        Text('01/22 15:00'),
-                      ],
-                    ),
-
-                    Column(
-                      children: [
-                        Container(
-                          width: 140,
-                          decoration: BoxDecoration(
-                            color: Colors.black.withValues(alpha: 0.7),
-                            borderRadius: BorderRadius.circular(999.0),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 4.0,
-                              horizontal: 32.0,
-                            ),
-                            child: Text(
-                              "외국인매수",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 4),
-                        Text.rich(
-                          TextSpan(
-                            children: [
-                              TextSpan(
-                                // 발행 주 개수 data
-                                text: '301,949',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                              TextSpan(
-                                text: '주',
-                                style: TextStyle(fontSize: 14),
-                              ),
-                            ],
-                          ),
-                        ),
-
-                        Text('4일 연속 순매수'),
+                        Text('TODAY', style: TextStyle(color: Colors.red)),
                       ],
                     ),
                   ],
