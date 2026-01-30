@@ -88,27 +88,109 @@ class _EtfStockCatchComponentState extends State<EtfStockCatchComponent> {
             ],
           ),
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20.0),
+            padding: const EdgeInsets.symmetric(
+              vertical: 20.0,
+              horizontal: 16.0,
+            ),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              spacing: 4,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'KoAct 미국나스닥채',
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
+                Container(
+                  width: 34,
+                  height: 34,
+                  decoration: BoxDecoration(
+                    color: Color(0xFF6665FD).withValues(alpha: 0.2),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'RASSI',
+                        style: const TextStyle(
+                          color: Color(0xFF6665FD),
+                          fontSize: 8,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
-                    ),
-                    Row(
-                      children: [
-                        Text('TODAY', style: TextStyle(color: Colors.red)),
-                      ],
-                    ),
-                  ],
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'KoAct 미국나스닥채',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Row(
+                            spacing: 4.0,
+                            children: [
+                              Text(
+                                'TODAY',
+                                style: TextStyle(
+                                  color: Colors.red,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              Container(
+                                padding: EdgeInsets.symmetric(
+                                  vertical: 2.0,
+                                  horizontal: 4.0,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: Colors.red,
+                                  borderRadius: BorderRadius.circular(4),
+                                ),
+                                child: Text(
+                                  '매수',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            '0104H0',
+                            style: TextStyle(
+                              color: Colors.black.withValues(alpha: 0.5),
+                            ),
+                          ),
+                          Row(
+                            spacing: 4,
+                            children: [
+                              Text(
+                                '01/29 15:00',
+                                style: TextStyle(
+                                  color: Colors.black.withValues(alpha: 0.5),
+                                ),
+                              ),
+                              Text(
+                                '11,135원',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -193,127 +275,109 @@ class _EtfStockCatchComponentState extends State<EtfStockCatchComponent> {
             ],
           ),
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+            padding: const EdgeInsets.symmetric(
+              vertical: 20.0,
+              horizontal: 16.0,
+            ),
+            child: Row(
+              spacing: 4,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "대우건설 ",
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
+                Container(
+                  width: 34,
+                  height: 34,
+                  decoration: BoxDecoration(
+                    color: Color(0xFF6665FD).withValues(alpha: 0.2),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'RASSI',
+                        style: const TextStyle(
+                          color: Color(0xFF6665FD),
+                          fontSize: 8,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
-                    ),
-                    Text(
-                      "047040",
-                      style: TextStyle(fontSize: 14, color: Colors.grey),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-
-                SizedBox(height: 12.0),
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Column(
-                      children: [
-                        Container(
-                          width: 140,
-                          decoration: BoxDecoration(
-                            color: Color(0xFF6665FD),
-                            borderRadius: BorderRadius.circular(999.0),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 4.0,
-                              horizontal: 32.0,
-                            ),
-                            child: Text(
-                              "라씨 매수",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w600,
-                              ),
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'TIGER 원유선물En',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
-                        ),
-                        SizedBox(height: 4),
-                        Text.rich(
-                          TextSpan(
+                          Row(
+                            spacing: 4.0,
                             children: [
-                              TextSpan(
-                                // 주식 가격 data
-                                text: '4,930',
+                              Text(
+                                'TODAY',
                                 style: TextStyle(
-                                  fontSize: 16,
+                                  color: Colors.red,
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
-                              TextSpan(
-                                text: '원',
-                                style: TextStyle(fontSize: 14),
-                              ),
-                            ],
-                          ),
-                        ),
-
-                        Text('01/22 15:00'),
-                      ],
-                    ),
-
-                    Column(
-                      children: [
-                        Container(
-                          width: 140,
-                          decoration: BoxDecoration(
-                            color: Colors.black.withValues(alpha: 0.7),
-                            borderRadius: BorderRadius.circular(999.0),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 4.0,
-                              horizontal: 32.0,
-                            ),
-                            child: Text(
-                              "기관매수",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 4),
-                        Text.rich(
-                          TextSpan(
-                            children: [
-                              TextSpan(
-                                // 발행 주 개수 data
-                                text: '7,452,039',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
+                              Container(
+                                padding: EdgeInsets.symmetric(
+                                  vertical: 2.0,
+                                  horizontal: 4.0,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: Colors.red,
+                                  borderRadius: BorderRadius.circular(4),
+                                ),
+                                child: Text(
+                                  '매수',
+                                  style: TextStyle(color: Colors.white),
                                 ),
                               ),
-                              TextSpan(
-                                text: '주',
-                                style: TextStyle(fontSize: 14),
+                            ],
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            '130680',
+                            style: TextStyle(
+                              color: Colors.black.withValues(alpha: 0.5),
+                            ),
+                          ),
+                          Row(
+                            spacing: 4,
+                            children: [
+                              Text(
+                                '01/30 15:00',
+                                style: TextStyle(
+                                  color: Colors.black.withValues(alpha: 0.5),
+                                ),
+                              ),
+                              Text(
+                                '4,270원',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ],
                           ),
-                        ),
-
-                        Text('6일 연속 순매수'),
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -339,7 +403,7 @@ class _EtfStockCatchComponentState extends State<EtfStockCatchComponent> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SizedBox(height: 24),
+              SizedBox(height: 16),
               Icon(Icons.help_outline_outlined, color: Colors.grey, size: 32),
               SizedBox(height: 12),
               Text(
@@ -353,7 +417,7 @@ class _EtfStockCatchComponentState extends State<EtfStockCatchComponent> {
                 textAlign: TextAlign.center,
               ),
 
-              SizedBox(height: 24),
+              SizedBox(height: 16),
             ],
           ),
         ),
@@ -374,7 +438,7 @@ class _EtfStockCatchComponentState extends State<EtfStockCatchComponent> {
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [Text("ETF 매매신호 발생종목 더보기")],
+            children: [Text("함께 산 종목 더보기")],
           ),
         ),
       ],
