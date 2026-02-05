@@ -3,23 +3,22 @@ import 'package:flutter/material.dart';
 class FilterStockCard extends StatelessWidget {
   final String stockName;
   final String stockCode;
-  final int holdingDays;
-  static const double cardHeight = 250.0;
+  final String descriptionName;
+  final String descriptionDetail;
+  static const double cardSize = 150.0;
 
   const FilterStockCard({
     super.key,
     required this.stockName,
     required this.stockCode,
-    required this.holdingDays,
+    required this.descriptionName,
+    required this.descriptionDetail,
   });
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final cardWidth = screenWidth * 2 / 3;
-
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(6.0),
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white,
@@ -34,39 +33,45 @@ class FilterStockCard extends StatelessWidget {
           ],
         ),
         child: SizedBox(
-          width: cardWidth,
-          height: cardHeight,
+          width: cardSize,
+          height: cardSize,
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                // 주식 이름
-                Text(
-                  stockName,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
+                // 주식 이름 + 주식 번호
+                Column(
+                  children: [
+                    Text(
+                      stockName,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      stockCode,
+                      style: TextStyle(fontSize: 14, color: Colors.grey),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 8),
-                // 주식 번호
-                Text(
-                  stockCode,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    color: Colors.grey,
-                  ),
-                ),
-                const SizedBox(height: 12),
-                // 평균 보유기간
-                Text(
-                  '${holdingDays}일',
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                  ),
+                // 상세 제목 + 상세 수치
+                Column(
+                  children: [
+                    Text(
+                      descriptionName,
+                      style: TextStyle(fontSize: 14, color: Colors.redAccent),
+                    ),
+                    Text(
+                      descriptionDetail,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.redAccent,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
