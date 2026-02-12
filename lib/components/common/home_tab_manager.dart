@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../pages/home/home_tab_content.dart';
 import '../../pages/home/ai_signal_tab_content.dart';
 import '../../pages/home/stock_catch_tab_content.dart';
-import '../tabs/market_view_tab_content.dart';
+import '../../pages/home/market_view_tab_content.dart';
 import '../../models/tab_item.dart';
 
 class HomeTabManager {
