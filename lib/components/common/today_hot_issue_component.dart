@@ -4,9 +4,17 @@ import 'package:flutter/material.dart';
 /// 입력 데이터 모델 - 라벨과 값(중요도)만 필요
 class HotIssueItem {
   final String label;
-  final int value; // 중요도 (높을수록 버블이 큼)
+  final int value; // 양수: 크기 변동, 0: 회색 최소, 음수: 파란색 최소
 
   const HotIssueItem({required this.label, required this.value});
+}
+
+/// 색상 pair (배경색 + 텍스트색)
+class BubbleColorPair {
+  final Color background;
+  final Color text;
+
+  const BubbleColorPair({required this.background, required this.text});
 }
 
 /// 내부용 - 위치가 계산된 버블
@@ -14,6 +22,7 @@ class _PositionedBubble {
   final String label;
   final double radius;
   final Color color;
+  final Color textColor;
   double x;
   double y;
 
@@ -21,6 +30,7 @@ class _PositionedBubble {
     required this.label,
     required this.radius,
     required this.color,
+    required this.textColor,
     this.x = 0,
     this.y = 0,
   });
@@ -32,8 +42,10 @@ class _CirclePacker {
   final double height;
   final double minRadius;
   final double maxRadius;
-  final List<Color> colorPalette;
-  final double spacing; // 버블 간 간격
+  final List<BubbleColorPair> colorPalette;
+  final BubbleColorPair zeroColor; // value == 0
+  final BubbleColorPair negativeColor; // value < 0
+  final double spacing;
 
   _CirclePacker({
     required this.width,
@@ -41,7 +53,9 @@ class _CirclePacker {
     this.minRadius = 25,
     this.maxRadius = 55,
     required this.colorPalette,
-    this.spacing = 2, // 기본 간격 2px (기존 4px에서 절반으로)
+    required this.zeroColor,
+    required this.negativeColor,
+    this.spacing = 2,
   });
 
   List<_PositionedBubble> pack(List<HotIssueItem> items) {
@@ -51,9 +65,10 @@ class _CirclePacker {
     final sortedItems = List<HotIssueItem>.from(items)
       ..sort((a, b) => b.value.compareTo(a.value));
 
-    // value → radius 변환 (정규화)
-    final maxValue = sortedItems.first.value;
-    final minValue = sortedItems.last.value;
+    // 양수 값들만 필터링해서 정규화에 사용
+    final positiveItems = sortedItems.where((item) => item.value > 0).toList();
+    final maxValue = positiveItems.isNotEmpty ? positiveItems.first.value : 1;
+    final minValue = positiveItems.isNotEmpty ? positiveItems.last.value : 1;
     final valueRange = maxValue - minValue;
 
     final bubbles = <_PositionedBubble>[];
@@ -63,29 +78,46 @@ class _CirclePacker {
     for (var i = 0; i < sortedItems.length; i++) {
       final item = sortedItems[i];
 
-      // value를 radius로 변환
-      double normalizedValue = valueRange > 0
-          ? (item.value - minValue) / valueRange
-          : 0.5;
-      final radius = minRadius + (maxRadius - minRadius) * normalizedValue;
+      double radius;
+      Color bgColor;
+      Color txtColor;
 
-      // 색상 선택 (중요도에 따라)
-      final colorIndex = (normalizedValue * (colorPalette.length - 1)).round();
-      final color = colorPalette[colorPalette.length - 1 - colorIndex];
+      if (item.value < 0) {
+        // 음수: 최소 크기, 파란색
+        radius = minRadius;
+        bgColor = negativeColor.background;
+        txtColor = negativeColor.text;
+      } else if (item.value == 0) {
+        // 0: 최소 크기, 회색
+        radius = minRadius;
+        bgColor = zeroColor.background;
+        txtColor = zeroColor.text;
+      } else {
+        // 양수: 크기 변동, 팔레트에서 색상 선택
+        double normalizedValue = valueRange > 0
+            ? (item.value - minValue) / valueRange
+            : 0.5;
+        radius = minRadius + (maxRadius - minRadius) * normalizedValue;
+
+        final colorIndex = (normalizedValue * (colorPalette.length - 1))
+            .round();
+        final colorPair = colorPalette[colorPalette.length - 1 - colorIndex];
+        bgColor = colorPair.background;
+        txtColor = colorPair.text;
+      }
 
       final bubble = _PositionedBubble(
         label: item.label,
         radius: radius,
-        color: color,
+        color: bgColor,
+        textColor: txtColor,
       );
 
       // 위치 찾기
       if (i == 0) {
-        // 첫 번째(가장 큰) 버블은 중앙에
         bubble.x = centerX;
         bubble.y = centerY;
       } else {
-        // 나선형 탐색으로 충돌하지 않는 위치 찾기
         _findPosition(bubble, bubbles, centerX, centerY);
       }
 
@@ -101,7 +133,6 @@ class _CirclePacker {
     double centerX,
     double centerY,
   ) {
-    // 나선형 탐색 파라미터
     double angle = 0;
     double distance = 0;
     const double angleStep = 0.3;
@@ -112,7 +143,6 @@ class _CirclePacker {
       final x = centerX + distance * math.cos(angle);
       final y = centerY + distance * math.sin(angle);
 
-      // 경계 체크
       final margin = bubble.radius;
       if (x - margin < 0 ||
           x + margin > width ||
@@ -123,7 +153,6 @@ class _CirclePacker {
         continue;
       }
 
-      // 충돌 체크
       bool hasCollision = false;
       for (final existing in existingBubbles) {
         final dx = x - existing.x;
@@ -161,15 +190,33 @@ class TodayHotIssueComponent extends StatefulWidget {
 
 class _TodayHotIssueComponentState extends State<TodayHotIssueComponent>
     with TickerProviderStateMixin {
-  // 색상 팔레트 (중요도: 낮음 → 높음)
-  static const List<Color> _colorPalette = [
-    Color(0xFFE53935),
-    Color(0xFFEC407A),
-    Color(0xFFF48FB1),
-    Color(0xFFF8BBD9),
+  // 색상 팔레트 (중요도: 낮음 → 높음) - 배경색 + 텍스트색 pair
+  static const List<BubbleColorPair> _colorPalette = [
+    BubbleColorPair(
+      background: Color(0xFFE53935),
+      text: Color(0xFFFFFFFF),
+    ), // 높음
+    BubbleColorPair(background: Color(0xFFEC407A), text: Color(0xFFFFFFFF)),
+    BubbleColorPair(background: Color(0xFFF48FB1), text: Color(0xFFFFFFFF)),
+    BubbleColorPair(
+      background: Color(0xFFF8BBD9),
+      text: Color(0xFFE53935),
+    ), // 낮음
   ];
 
-  // 데이터
+  // value == 0: 회색
+  static const BubbleColorPair _zeroColor = BubbleColorPair(
+    background: Color(0xFFBDBDBD),
+    text: Color(0xFFFFFFFF),
+  );
+
+  // value < 0: 파란색
+  static const BubbleColorPair _negativeColor = BubbleColorPair(
+    background: Color(0xFF42A5F5),
+    text: Color(0xFFFFFFFF),
+  );
+
+  // 데이터 (테스트용 - 양수, 0, 음수 포함)
   final List<HotIssueItem> _items = const [
     HotIssueItem(label: '석유화학', value: 95),
     HotIssueItem(label: '은행', value: 85),
@@ -184,8 +231,8 @@ class _TodayHotIssueComponentState extends State<TodayHotIssueComponent>
     HotIssueItem(label: '우크라\n재건', value: 52),
     HotIssueItem(label: '제약\n바이오', value: 48),
     HotIssueItem(label: '음식료', value: 50),
-    HotIssueItem(label: '반도체', value: 45),
-    HotIssueItem(label: '방산', value: 48),
+    HotIssueItem(label: '반도체', value: 0), // 회색
+    HotIssueItem(label: '방산', value: -10), // 파란색
   ];
 
   List<_PositionedBubble>? _positionedBubbles;
@@ -247,7 +294,6 @@ class _TodayHotIssueComponentState extends State<TodayHotIssueComponent>
             style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
           ),
         ),
-
         SizedBox(
           height: 400,
           child: LayoutBuilder(
@@ -257,12 +303,13 @@ class _TodayHotIssueComponentState extends State<TodayHotIssueComponent>
                   width: constraints.maxWidth,
                   height: 400,
                   colorPalette: _colorPalette,
-                  spacing: 1, // 간격 2px
+                  zeroColor: _zeroColor,
+                  negativeColor: _negativeColor,
+                  spacing: 1,
                 );
                 _positionedBubbles = packer.pack(_items);
               }
 
-              // 애니메이션 초기화 (한 번만)
               if (!_isInitialized) {
                 _isInitialized = true;
                 WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -291,7 +338,7 @@ class _TodayHotIssueComponentState extends State<TodayHotIssueComponent>
 
   Widget _buildAnimatedBubble(_PositionedBubble bubble, int index) {
     final diameter = bubble.radius * 2;
-    final fontSize = diameter * 0.2;
+    final fontSize = diameter * 0.23;
 
     Widget bubbleWidget = GestureDetector(
       onTap: () {
@@ -316,7 +363,7 @@ class _TodayHotIssueComponentState extends State<TodayHotIssueComponent>
             bubble.label,
             textAlign: TextAlign.center,
             style: TextStyle(
-              color: Colors.white,
+              color: bubble.textColor, // pair에서 가져온 텍스트 색상
               fontSize: fontSize,
               fontWeight: FontWeight.w600,
               height: 1.2,
