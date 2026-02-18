@@ -326,8 +326,108 @@ class _HotIssueTitleBarState extends State<_HotIssueTitleBar> {
             ],
           ),
         ),
-        // TODO: detail 영역 추후 구현 예정
+        // 국가 토글 버튼
+        _buildCountryToggle(),
       ],
+    );
+  }
+
+  Widget _buildCountryToggle() {
+    final isKR = widget.country == "KR";
+
+    return Container(
+      padding: const EdgeInsets.all(3),
+      decoration: BoxDecoration(
+        color: Colors.grey.shade200,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          // 한국 버튼
+          GestureDetector(
+            onTap: () {
+              if (!isKR) {
+                widget.onCountryChanged("KR");
+              }
+            },
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              decoration: BoxDecoration(
+                color: isKR ? Colors.white : Colors.transparent,
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: isKR
+                    ? [
+                        BoxShadow(
+                          color: Colors.black.withAlpha(25),
+                          blurRadius: 4,
+                          offset: const Offset(0, 1),
+                        ),
+                      ]
+                    : null,
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (isKR) ...[
+                    const Text("🇰🇷", style: TextStyle(fontSize: 20)),
+                    const SizedBox(width: 4),
+                  ],
+                  Text(
+                    "한국",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.normal,
+                      color: isKR ? Colors.black : Colors.grey.shade500,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          // 미국 버튼
+          GestureDetector(
+            onTap: () {
+              if (isKR) {
+                widget.onCountryChanged("EN");
+              }
+            },
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              decoration: BoxDecoration(
+                color: !isKR ? Colors.white : Colors.transparent,
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: !isKR
+                    ? [
+                        BoxShadow(
+                          color: Colors.black.withAlpha(25),
+                          blurRadius: 4,
+                          offset: const Offset(0, 1),
+                        ),
+                      ]
+                    : null,
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (!isKR) ...[
+                    const Text("🇺🇸", style: TextStyle(fontSize: 20)),
+                    const SizedBox(width: 4),
+                  ],
+                  Text(
+                    "미국",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: !isKR ? FontWeight.w500 : FontWeight.normal,
+                      color: !isKR ? Colors.black : Colors.grey.shade500,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
