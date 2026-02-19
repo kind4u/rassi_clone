@@ -334,6 +334,8 @@ class _HotIssueTitleBarState extends State<_HotIssueTitleBar> {
 
   Widget _buildCountryToggle() {
     final isKR = widget.country == "KR";
+    const double buttonWidth = 70;
+    const double buttonHeight = 32;
 
     return Container(
       padding: const EdgeInsets.all(3),
@@ -341,92 +343,91 @@ class _HotIssueTitleBarState extends State<_HotIssueTitleBar> {
         color: Colors.grey.shade200,
         borderRadius: BorderRadius.circular(20),
       ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          // 한국 버튼
-          GestureDetector(
-            onTap: () {
-              if (!isKR) {
-                widget.onCountryChanged("KR");
-              }
-            },
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-              decoration: BoxDecoration(
-                color: isKR ? Colors.white : Colors.transparent,
-                borderRadius: BorderRadius.circular(16),
-                boxShadow: isKR
-                    ? [
-                        BoxShadow(
-                          color: Colors.black.withAlpha(25),
-                          blurRadius: 4,
-                          offset: const Offset(0, 1),
-                        ),
-                      ]
-                    : null,
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  if (isKR) ...[
-                    const Text("🇰🇷", style: TextStyle(fontSize: 20)),
-                    const SizedBox(width: 4),
-                  ],
-                  Text(
-                    "한국",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.normal,
-                      color: isKR ? Colors.black : Colors.grey.shade500,
+      child: SizedBox(
+        width: buttonWidth * 2,
+        height: buttonHeight,
+        child: Stack(
+          children: [
+            // 슬라이딩 배경 (애니메이션)
+            AnimatedAlign(
+              alignment: isKR ? Alignment.centerLeft : Alignment.centerRight,
+              duration: const Duration(milliseconds: 200),
+              curve: Curves.easeInOut,
+              child: Container(
+                width: buttonWidth,
+                height: buttonHeight,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(16),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withAlpha(25),
+                      blurRadius: 4,
+                      offset: const Offset(0, 1),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
-          // 미국 버튼
-          GestureDetector(
-            onTap: () {
-              if (isKR) {
-                widget.onCountryChanged("EN");
-              }
-            },
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-              decoration: BoxDecoration(
-                color: !isKR ? Colors.white : Colors.transparent,
-                borderRadius: BorderRadius.circular(16),
-                boxShadow: !isKR
-                    ? [
-                        BoxShadow(
-                          color: Colors.black.withAlpha(25),
-                          blurRadius: 4,
-                          offset: const Offset(0, 1),
-                        ),
-                      ]
-                    : null,
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  if (!isKR) ...[
-                    const Text("🇺🇸", style: TextStyle(fontSize: 20)),
-                    const SizedBox(width: 4),
-                  ],
-                  Text(
-                    "미국",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: !isKR ? FontWeight.w500 : FontWeight.normal,
-                      color: !isKR ? Colors.black : Colors.grey.shade500,
-                    ),
-                  ),
-                ],
+            // 텍스트 버튼들 (고정 위치)
+            Row(
+              children: [
+                _buildToggleButton(
+                  "한국",
+                  "🇰🇷",
+                  "KR",
+                  isKR,
+                  buttonWidth,
+                  buttonHeight,
+                ),
+                _buildToggleButton(
+                  "미국",
+                  "🇺🇸",
+                  "EN",
+                  !isKR,
+                  buttonWidth,
+                  buttonHeight,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildToggleButton(
+    String label,
+    String flag,
+    String country,
+    bool isActive,
+    double width,
+    double height,
+  ) {
+    return GestureDetector(
+      onTap: () => widget.onCountryChanged(country),
+      child: Container(
+        width: width,
+        height: height,
+        color: Colors.transparent,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (isActive) ...[
+              Text(flag, style: const TextStyle(fontSize: 16)),
+              const SizedBox(width: 4),
+            ],
+            Text(
+              label,
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: isActive ? FontWeight.w500 : FontWeight.normal,
+                color: isActive ? Colors.black : Colors.grey.shade500,
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
