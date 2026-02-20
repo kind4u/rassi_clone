@@ -84,7 +84,7 @@ class _MarketViewTabContentState extends State<MarketViewTabContent> {
             },
           ),
 
-          TodayHotIssueComponent(),
+          TodayHotIssueComponent(country: _selectedCountry),
         ],
       ),
     );
@@ -203,7 +203,9 @@ class _HotIssueTitleBarState extends State<_HotIssueTitleBar> {
 
   @override
   void dispose() {
-    _removeOverlay();
+    // dispose 시에는 setState 호출하지 않고 OverlayEntry만 제거
+    _overlayEntry?.remove();
+    _overlayEntry = null;
     super.dispose();
   }
 
@@ -249,9 +251,13 @@ class _HotIssueTitleBarState extends State<_HotIssueTitleBar> {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    _buildDropdownItem("오늘의 핫이슈", "KR"),
+                    _buildDropdownItem("오늘의 핫이슈", "이슈 중 특히 강세를 보인 핫 이슈", "KR"),
                     Divider(height: 1, color: Colors.grey.shade200),
-                    _buildDropdownItem("미국시장 이슈", "EN"),
+                    _buildDropdownItem(
+                      "미국시장 이슈",
+                      "TOP2000 종목의 급등락 사유를 분석",
+                      "EN",
+                    ),
                   ],
                 ),
               ),
@@ -277,7 +283,7 @@ class _HotIssueTitleBarState extends State<_HotIssueTitleBar> {
     }
   }
 
-  Widget _buildDropdownItem(String title, String country) {
+  Widget _buildDropdownItem(String title, String subTitle, String country) {
     final isSelected = widget.country == country;
     return InkWell(
       onTap: () {
@@ -286,13 +292,34 @@ class _HotIssueTitleBarState extends State<_HotIssueTitleBar> {
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        child: Text(
-          title,
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-            color: isSelected ? Colors.black : Colors.grey.shade600,
-          ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: isSelected ? Color(0xFF6665FD) : Colors.black,
+                  ),
+                ),
+                Text(
+                  subTitle,
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.grey.withValues(alpha: 0.6),
+                  ),
+                ),
+              ],
+            ),
+            Icon(
+              Icons.check,
+              color: Color(0xFF6665FD).withValues(alpha: isSelected ? 1 : 0),
+            ),
+          ],
         ),
       ),
     );

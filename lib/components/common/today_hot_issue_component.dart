@@ -1,13 +1,6 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
-
-/// 입력 데이터 모델 - 라벨과 값(중요도)만 필요
-class HotIssueItem {
-  final String label;
-  final int value; // 양수: 크기 변동, 0: 회색 최소, 음수: 파란색 최소
-
-  const HotIssueItem({required this.label, required this.value});
-}
+import 'package:rassi_clone/models/hot_issue_model.dart';
 
 /// 색상 pair (배경색 + 텍스트색)
 class BubbleColorPair {
@@ -182,7 +175,14 @@ class _CirclePacker {
 }
 
 class TodayHotIssueComponent extends StatefulWidget {
-  const TodayHotIssueComponent({super.key});
+  final String country;
+  final int timeGroup;
+
+  const TodayHotIssueComponent({
+    super.key,
+    this.country = 'KR',
+    this.timeGroup = 0,
+  });
 
   @override
   State<TodayHotIssueComponent> createState() => _TodayHotIssueComponentState();
@@ -216,29 +216,35 @@ class _TodayHotIssueComponentState extends State<TodayHotIssueComponent>
     text: Color(0xFFFFFFFF),
   );
 
-  // 데이터 (테스트용 - 양수, 0, 음수 포함)
-  final List<HotIssueItem> _items = const [
-    HotIssueItem(label: '석유화학', value: 95),
-    HotIssueItem(label: '은행', value: 85),
-    HotIssueItem(label: '증권', value: 70),
-    HotIssueItem(label: '보험', value: 65),
-    HotIssueItem(label: '지주회사', value: 68),
-    HotIssueItem(label: '2차전지', value: 65),
-    HotIssueItem(label: '냉각\n솔루션', value: 68),
-    HotIssueItem(label: '초전도체', value: 62),
-    HotIssueItem(label: 'HBM', value: 58),
-    HotIssueItem(label: '자동차', value: 48),
-    HotIssueItem(label: '우크라\n재건', value: 52),
-    HotIssueItem(label: '제약\n바이오', value: 48),
-    HotIssueItem(label: '음식료', value: 50),
-    HotIssueItem(label: '반도체', value: 0), // 회색
-    HotIssueItem(label: '방산', value: -10), // 파란색
-  ];
+  // 모델에서 데이터 로드
+  List<HotIssueItem> get _items => HotIssueData.getItems(
+    country: widget.country,
+    timeGroup: widget.timeGroup,
+  );
 
   List<_PositionedBubble>? _positionedBubbles;
   List<AnimationController>? _animationControllers;
   List<Animation<double>>? _scaleAnimations;
   bool _isInitialized = false;
+
+  @override
+  void didUpdateWidget(TodayHotIssueComponent oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // country 또는 timeGroup이 변경되면 버블 재생성
+    if (oldWidget.country != widget.country ||
+        oldWidget.timeGroup != widget.timeGroup) {
+      _resetBubbles();
+    }
+  }
+
+  void _resetBubbles() {
+    _disposeAnimations();
+    _positionedBubbles = null;
+    _isInitialized = false;
+    if (mounted) {
+      setState(() {});
+    }
+  }
 
   @override
   void dispose() {
@@ -251,10 +257,14 @@ class _TodayHotIssueComponentState extends State<TodayHotIssueComponent>
       for (final controller in _animationControllers!) {
         controller.dispose();
       }
+      _animationControllers = null;
+      _scaleAnimations = null;
     }
   }
 
   void _initAnimations(int count) {
+    if (!mounted) return; // dispose된 상태면 중단
+
     _disposeAnimations();
 
     _animationControllers = List.generate(count, (index) {
@@ -275,7 +285,7 @@ class _TodayHotIssueComponentState extends State<TodayHotIssueComponent>
     for (var i = 0; i < _animationControllers!.length; i++) {
       final delay = random.nextInt(200);
       Future.delayed(Duration(milliseconds: delay), () {
-        if (mounted && _animationControllers != null) {
+        if (mounted && _animationControllers != null && i < _animationControllers!.length) {
           _animationControllers![i].forward();
         }
       });
@@ -313,6 +323,7 @@ class _TodayHotIssueComponentState extends State<TodayHotIssueComponent>
               if (!_isInitialized) {
                 _isInitialized = true;
                 WidgetsBinding.instance.addPostFrameCallback((_) {
+                  if (!mounted) return; // 위젯이 dispose되었으면 중단
                   _initAnimations(_positionedBubbles!.length);
                   setState(() {});
                 });
