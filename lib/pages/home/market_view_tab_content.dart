@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rassi_clone/components/common/market_ai_news_component.dart';
 import 'package:rassi_clone/components/common/title_bar.dart';
 import 'package:rassi_clone/components/common/today_hot_issue_component.dart';
 
@@ -163,6 +164,8 @@ class _MarketViewTabContentState extends State<MarketViewTabContent> {
             detailText: "AI가 빠르게 수집하여 분석하는 AI속보!",
             onDetailTap: () {},
           ),
+
+          MarketAiNewsComponent(),
         ],
       ),
     );
