@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rassi_clone/components/common/market_ai_news_component.dart';
+import 'package:rassi_clone/components/common/net_sales_stock_component.dart';
 import 'package:rassi_clone/components/common/title_bar.dart';
 import 'package:rassi_clone/components/common/today_hot_issue_component.dart';
 
@@ -116,7 +117,10 @@ class _MarketViewTabContentState extends State<MarketViewTabContent> {
     return Padding(
       padding: EdgeInsetsGeometry.symmetric(horizontal: 24.0),
       child: Column(
-        children: [TitleBar(title: "외국인/기관 순매매", onDetailTap: () {})],
+        children: [
+          TitleBar(title: "외국인/기관 순매매", onDetailTap: () {}),
+          NetSalesStockComponent(),
+        ],
       ),
     );
   }
