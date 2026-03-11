@@ -14,33 +14,26 @@ class _NetSalesStockComponentState extends State<NetSalesStockComponent> {
 
   String get _highlightText => _tabHighlights[_selectedTab];
 
-  Widget _buildTabButton({
-    required String text,
-    required int index,
-    required bool isLeft,
-  }) {
+  Widget _buildTabButton({required String text, required int index}) {
     final isSelected = _selectedTab == index;
 
     return Expanded(
       child: GestureDetector(
         onTap: () => setState(() => _selectedTab = index),
         child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 12.0),
+          padding: const EdgeInsets.symmetric(vertical: 10.0),
           decoration: BoxDecoration(
-            color: Colors.white,
-            border: BoxBorder.all(
-              color: isSelected ? Colors.black : Colors.grey.shade400,
-              width: isSelected ? 1 : 0.5,
-            ),
-            borderRadius: isLeft
-                ? const BorderRadius.only(
-                    topLeft: Radius.circular(8),
-                    bottomLeft: Radius.circular(8),
-                  )
-                : const BorderRadius.only(
-                    topRight: Radius.circular(8),
-                    bottomRight: Radius.circular(8),
-                  ),
+            color: isSelected ? Colors.white : Colors.transparent,
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: isSelected
+                ? [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.08),
+                      blurRadius: 6,
+                      offset: const Offset(0, 1),
+                    ),
+                  ]
+                : null,
           ),
           child: Center(
             child: Text(
@@ -48,7 +41,7 @@ class _NetSalesStockComponentState extends State<NetSalesStockComponent> {
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-                color: isSelected ? Colors.black : Colors.grey[600],
+                color: isSelected ? Colors.black : Colors.grey[500],
               ),
             ),
           ),
@@ -111,11 +104,18 @@ class _NetSalesStockComponentState extends State<NetSalesStockComponent> {
       child: Column(
         spacing: 16.0,
         children: [
-          Row(
-            children: [
-              _buildTabButton(text: '순매수', index: 0, isLeft: true),
-              _buildTabButton(text: '순매도', index: 1, isLeft: false),
-            ],
+          Container(
+            padding: const EdgeInsets.all(4),
+            decoration: BoxDecoration(
+              color: Colors.grey.shade200,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Row(
+              children: [
+                _buildTabButton(text: '순매수', index: 0),
+                _buildTabButton(text: '순매도', index: 1),
+              ],
+            ),
           ),
           _backgroundComponent(
             contentText: _selectedTab == 0 ? '연속 순매수 종목' : '연속 순매도 종목',
