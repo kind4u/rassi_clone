@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rassi_clone/components/common/market_ai_news_component.dart';
+import 'package:rassi_clone/components/common/market_ai_pickword.dart';
 import 'package:rassi_clone/components/common/net_sales_stock_component.dart';
 import 'package:rassi_clone/components/common/title_bar.dart';
 import 'package:rassi_clone/components/common/today_hot_issue_component.dart';
@@ -140,6 +141,7 @@ class _MarketViewTabContentState extends State<MarketViewTabContent> {
             detailText: "AI가 주가상승에 영향을 주는 키워드를 픽!",
             onDetailTap: () {},
           ),
+          MarketAiPickword(),
         ],
       ),
     );
