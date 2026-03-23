@@ -40,6 +40,8 @@ class _TodayHotIssueComponentState extends State<TodayHotIssueComponent> {
 
   double _sliderValue = 1.0;
 
+  int get _currentTimeGroup => (_sliderValue * 7).round().clamp(0, 7);
+
   String _getTimeLabel(double value) {
     final index = (value * 7).round().clamp(0, 7);
     return _timeLabels[index];
@@ -47,14 +49,17 @@ class _TodayHotIssueComponentState extends State<TodayHotIssueComponent> {
 
   @override
   Widget build(BuildContext context) {
+    final timeGroup = widget.country == 'KR'
+        ? _currentTimeGroup
+        : widget.timeGroup;
     final items = HotIssueData.getItems(
       country: widget.country,
-      timeGroup: widget.timeGroup,
+      timeGroup: timeGroup,
     );
 
     final hotIssueWidget = widget.country == 'KR'
         ? KrHotIssueComponent(
-            key: ValueKey('kr_${widget.timeGroup}'),
+            key: ValueKey('kr_$_currentTimeGroup'),
             items: items,
           )
         : EnHotIssueComponent(
