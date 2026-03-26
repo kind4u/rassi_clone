@@ -318,6 +318,58 @@ class _KrHotIssueComponentState extends State<KrHotIssueComponent>
             ],
           ),
         ),
+
+        SizedBox(height: 24.0),
+        Container(
+          padding: EdgeInsetsGeometry.symmetric(
+            horizontal: 12.0,
+            vertical: 12.0,
+          ),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(8.0),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.1),
+                spreadRadius: 6,
+                blurRadius: 8,
+                offset: const Offset(0, 0),
+              ),
+            ],
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "오늘의 이슈 타임라인",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 8.0),
+                        Text("날짜별 모든 이슈와\n특징주를 한눈에 확인하세요."),
+                      ],
+                    ),
+                    const Icon(
+                      Icons.calendar_today,
+                      size: 48,
+                      color: Colors.black,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
       ],
     );
   }
