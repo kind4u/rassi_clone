@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rassi_clone/components/common/market_ai_news_component.dart';
 import 'package:rassi_clone/components/common/market_ai_pickword.dart';
+import 'package:rassi_clone/components/common/market_hot_theme_component.dart';
 import 'package:rassi_clone/components/common/net_sales_stock_component.dart';
 import 'package:rassi_clone/components/common/title_bar.dart';
 import 'package:rassi_clone/components/common/today_hot_issue_component.dart';
@@ -158,6 +159,7 @@ class _MarketViewTabContentState extends State<MarketViewTabContent> {
             detailText: "테마 트렌드와 주도주를 확인!",
             onDetailTap: () {},
           ),
+          MarketHotThemeComponent(),
         ],
       ),
     );
