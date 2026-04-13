@@ -5,6 +5,7 @@ import 'package:rassi_clone/components/common/market_hot_theme_component.dart';
 import 'package:rassi_clone/components/common/net_sales_stock_component.dart';
 import 'package:rassi_clone/components/common/title_bar.dart';
 import 'package:rassi_clone/components/common/today_hot_issue_component.dart';
+import 'package:rassi_clone/components/common/today_market_component.dart';
 import 'package:rassi_clone/components/common/today_quick_stock_scan_component.dart';
 
 class MarketViewTabContent extends StatefulWidget {
@@ -100,7 +101,10 @@ class _MarketViewTabContentState extends State<MarketViewTabContent> {
     return Padding(
       padding: EdgeInsetsGeometry.symmetric(horizontal: 24.0),
       child: Column(
-        children: [TitleBar(title: "오늘 시장은", onDetailTap: () {})],
+        children: [
+          TitleBar(title: "오늘 시장은", onDetailTap: () {}),
+          TodayMarketComponent(),
+        ],
       ),
     );
   }
