@@ -12,8 +12,8 @@ class _MarketHotThemeComponentState extends State<MarketHotThemeComponent> {
   static const Color _bgColor = Color(0xFFFFF0F0);
   static const Color _textColor = Color(0xFFE53935);
 
-  static const List<String> _themes = ['#건설', '#우주항공', '#온디바이스AI'];
-  static const List<String> _tabs = ['테마 종목', '관련 뉴스'];
+  static const List<String> _themes = ['#건설', '#2차전지', '#2차전지 소재'];
+  static const List<String> _tabs = ['오늘 강세 종목', '테마 주도주'];
 
   int _selectedTab = 0;
 
