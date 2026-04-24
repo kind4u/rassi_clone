@@ -53,11 +53,68 @@ class _MarketAiPickwordState extends State<MarketAiPickword> {
   Widget _buildContent(int selectedTab) {
     switch (selectedTab) {
       case 0: // NEW픽워드
-        return const SizedBox.shrink();
+        return SizedBox(
+          height: 100,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              _PickwordRow(
+                pickwordCategory: 'IT 서비스',
+                pickwordContent: '삼성에스디에스',
+              ),
+              _PickwordRow(
+                pickwordCategory: 'Agentic AI',
+                pickwordContent: 'SK하이닉스',
+              ),
+              _PickwordRow(
+                pickwordCategory: '고성능 메모리',
+                pickwordContent: 'SK하이닉스',
+              ),
+            ],
+          ),
+        );
       case 1: // HOT픽워드
-        return const SizedBox.shrink();
+        return SizedBox(
+          height: 100,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              _PickwordRow(
+                pickwordCategory: 'IT 서비스',
+                pickwordContent: '삼성에스디에스',
+              ),
+              _PickwordRow(
+                pickwordCategory: 'IT 서비스',
+                pickwordContent: '삼성에스디에스',
+              ),
+              _PickwordRow(
+                pickwordCategory: 'IT 서비스',
+                pickwordContent: '삼성에스디에스',
+              ),
+            ],
+          ),
+        );
       case 2: // TODAY종목
-        return const SizedBox.shrink();
+        return SizedBox(
+          height: 100,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              _TodayPickwordRow(
+                pickwordName: 'LS ELECTRIC',
+                pickwordNumber: '010120',
+              ),
+              _TodayPickwordRow(
+                pickwordName: '삼성바이오로직스',
+                pickwordNumber: '207940',
+              ),
+              _TodayPickwordRow(
+                pickwordName: 'SK하이닉스',
+                pickwordNumber: '000660',
+              ),
+            ],
+          ),
+        );
       default:
         return const SizedBox.shrink();
     }
@@ -126,11 +183,63 @@ class _MarketAiPickwordState extends State<MarketAiPickword> {
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [Text("NEW픽워드 더보기")],
+              children: [Text("${_tabs[_selectedTab]} 더보기")],
             ),
           ),
         ],
       ),
+    );
+  }
+}
+
+class _PickwordRow extends StatelessWidget {
+  final String pickwordCategory;
+  final String pickwordContent;
+
+  const _PickwordRow({
+    required this.pickwordCategory,
+    required this.pickwordContent,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      spacing: 6.0,
+      children: [
+        const Icon(Icons.calendar_today, color: Color(0xFF6665FD), size: 14),
+        const SizedBox(width: 2.0),
+        Text(
+          pickwordCategory,
+          style: const TextStyle(fontWeight: FontWeight.bold),
+        ),
+        const Text(':'),
+        Text(pickwordContent),
+      ],
+    );
+  }
+}
+
+class _TodayPickwordRow extends StatelessWidget {
+  final String pickwordName;
+  final String pickwordNumber;
+
+  const _TodayPickwordRow({
+    required this.pickwordName,
+    required this.pickwordNumber,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      spacing: 6.0,
+      children: [
+        const Icon(Icons.circle, color: Color(0xFF6665FD)),
+        Text(pickwordName),
+        Text(
+          pickwordNumber,
+          style: TextStyle(fontSize: 14, color: Colors.grey),
+        ),
+      ],
     );
   }
 }
