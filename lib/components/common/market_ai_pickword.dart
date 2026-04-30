@@ -76,21 +76,11 @@ class _MarketAiPickwordState extends State<MarketAiPickword> {
       case 1: // HOT픽워드
         return SizedBox(
           height: 100,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              _PickwordRow(
-                pickwordCategory: 'IT 서비스',
-                pickwordContent: '삼성에스디에스',
-              ),
-              _PickwordRow(
-                pickwordCategory: 'IT 서비스',
-                pickwordContent: '삼성에스디에스',
-              ),
-              _PickwordRow(
-                pickwordCategory: 'IT 서비스',
-                pickwordContent: '삼성에스디에스',
-              ),
+          child: _HotPickwordRow(
+            items: const [
+              _HotPickwordItem(category: '주주환원', content: '40종목'),
+              _HotPickwordItem(category: '데이터센터', content: '37종목'),
+              _HotPickwordItem(category: '미국', content: '34종목'),
             ],
           ),
         );
@@ -215,6 +205,87 @@ class _PickwordRow extends StatelessWidget {
         const Text(':'),
         Text(pickwordContent),
       ],
+    );
+  }
+}
+
+class _HotPickwordItem {
+  final String category;
+  final String content;
+
+  const _HotPickwordItem({required this.category, required this.content});
+}
+
+class _HotPickwordRow extends StatelessWidget {
+  final List<_HotPickwordItem> items;
+
+  const _HotPickwordRow({required this.items});
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        const spacing = 16.0;
+        const horizontalPadding = 16.0;
+        final availableWidth = constraints.maxWidth - horizontalPadding * 2;
+        final itemWidth =
+            (availableWidth - spacing * (items.length - 1)) / items.length;
+
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: horizontalPadding),
+          child: Row(
+            children: items.asMap().entries.map((entry) {
+              final index = entry.key;
+              final item = entry.value;
+
+              return Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (index > 0) const SizedBox(width: spacing),
+                  Container(
+                    width: itemWidth,
+                    height: itemWidth,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12.0),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.1),
+                          spreadRadius: 2,
+                          blurRadius: 4,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          item.category,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 13,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          item.content,
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.grey[600],
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              );
+            }).toList(),
+          ),
+        );
+      },
     );
   }
 }
