@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rassi_clone/data/repositories/market_repository.dart';
 import '../../pages/home/home_tab_content.dart';
 import '../../pages/home/ai_signal_tab_content.dart';
 import '../../pages/home/stock_catch_tab_content.dart';
@@ -10,7 +11,7 @@ class HomeTabManager {
       TabBottomShape.rounded; // TabBar 전체의 bottomShape
 
   static final List<TabItem> tabItems = [
-    const TabItem(label: '홈', content: HomeTabContent()),
+    TabItem(label: '홈', content: HomeTabContent(repository: MarketRepository())),
     const TabItem(label: 'AI매매신호', content: AISignalTabContent()),
     const TabItem(label: '종목캐치', content: StockCatchTabContent()),
     const TabItem(label: '마켓뷰', content: MarketViewTabContent()),

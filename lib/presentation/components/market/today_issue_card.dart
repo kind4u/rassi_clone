@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rassi_clone/data/models/stock_models.dart';
+import 'package:rassi_clone/domain/entities/today_issue.dart';
 
 class TodayIssueCard extends StatelessWidget {
   final TodayIssue issue;

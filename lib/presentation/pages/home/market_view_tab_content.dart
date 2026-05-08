@@ -8,6 +8,7 @@ import 'package:rassi_clone/presentation/components/market/net_sales_stock_compo
 import 'package:rassi_clone/presentation/components/shared/title_bar.dart';
 import 'package:rassi_clone/presentation/components/hot_issue/today_hot_issue_component.dart';
 import 'package:rassi_clone/presentation/components/market/today_market_component.dart';
+import 'package:rassi_clone/presentation/components/market/today_issue_component.dart';
 import 'package:rassi_clone/presentation/components/market/today_quick_stock_scan_component.dart';
 
 class MarketViewTabContent extends StatefulWidget {
@@ -61,19 +62,18 @@ class _MarketViewTabContentState extends State<MarketViewTabContent> {
             Container(height: 12, color: Colors.grey.shade100),
             const SizedBox(height: 24),
 
-            _marketHotTheme(),
+            // _marketHotTheme(),
 
-            const SizedBox(height: 24),
-            Container(height: 12, color: Colors.grey.shade100),
-            const SizedBox(height: 24),
-
+            // const SizedBox(height: 24),
+            // Container(height: 12, color: Colors.grey.shade100),
+            // const SizedBox(height: 24),
             _marketAINews(),
 
             const SizedBox(height: 24),
             Container(height: 12, color: Colors.grey.shade100),
             const SizedBox(height: 24),
 
-            _analysisReport(),
+            _todayIssue(),
           ],
         ),
       ),
@@ -195,13 +195,25 @@ class _MarketViewTabContentState extends State<MarketViewTabContent> {
     );
   }
 
-  // 분석 리포트 section
-  Widget _analysisReport() {
-    return Padding(
-      padding: EdgeInsetsGeometry.symmetric(horizontal: 24.0),
-      child: Column(
-        children: [TitleBar(title: "분석 리포트", onDetailTap: () {})],
-      ),
+  // 오늘의 이슈 section
+  Widget _todayIssue() {
+    return Column(
+      children: [
+        Padding(
+          padding: EdgeInsetsGeometry.symmetric(horizontal: 24.0),
+          child: TitleBar(
+            title: "오늘의 이슈",
+            detailText: "더보기",
+            onDetailTap: () {},
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: TodayIssueComponent(
+            issues: _marketRepository.getTodayIssues(),
+          ),
+        ),
+      ],
     );
   }
 }
