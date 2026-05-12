@@ -21,13 +21,13 @@ class RassiTabBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 48,
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 60),
       child: Row(
         children: tabs.asMap().entries.map((entry) {
           final index = entry.key;
           final tab = entry.value;
           final isSelected = index == selectedIndex;
-          
+
           return Expanded(
             child: GestureDetector(
               onTap: () => onTabSelected(index),
@@ -68,7 +68,7 @@ class RassiTabBar extends StatelessWidget {
       ),
     );
   }
-  
+
   /// tab bar 파라미터에 따른 bottom shape 변수 조정
   BorderRadius _getBottomBarBorderRadius() {
     switch (bottomShape) {

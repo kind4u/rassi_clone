@@ -3,6 +3,7 @@ import 'package:rassi_clone/data/repositories/hot_issue_repository.dart';
 import 'package:rassi_clone/data/repositories/market_repository.dart';
 import 'package:rassi_clone/presentation/components/market/market_ai_news_component.dart';
 import 'package:rassi_clone/presentation/components/market/market_ai_pickword.dart';
+import 'package:rassi_clone/presentation/components/market/market_category_compare_component.dart';
 import 'package:rassi_clone/presentation/components/market/market_hot_theme_component.dart';
 import 'package:rassi_clone/presentation/components/market/net_sales_stock_component.dart';
 import 'package:rassi_clone/presentation/components/shared/title_bar.dart';
@@ -62,11 +63,18 @@ class _MarketViewTabContentState extends State<MarketViewTabContent> {
             Container(height: 12, color: Colors.grey.shade100),
             const SizedBox(height: 24),
 
-            // _marketHotTheme(),
+            _categoryCompare(),
 
-            // const SizedBox(height: 24),
-            // Container(height: 12, color: Colors.grey.shade100),
-            // const SizedBox(height: 24),
+            const SizedBox(height: 24),
+            Container(height: 12, color: Colors.grey.shade100),
+            const SizedBox(height: 24),
+
+            _infoTimeline(),
+
+            const SizedBox(height: 24),
+            Container(height: 12, color: Colors.grey.shade100),
+            const SizedBox(height: 24),
+
             _marketAINews(),
 
             const SizedBox(height: 24),
@@ -161,18 +169,23 @@ class _MarketViewTabContentState extends State<MarketViewTabContent> {
   }
 
   // 이 시간 핫테마 section
-  Widget _marketHotTheme() {
+  Widget _categoryCompare() {
     return Padding(
       padding: EdgeInsetsGeometry.symmetric(horizontal: 24.0),
       child: Column(
         children: [
-          TitleBar(
-            title: "이 시간 핫테마",
-            detailText: "테마 트렌드와 주도주를 확인!",
-            onDetailTap: () {},
-          ),
-          MarketHotThemeComponent(),
+          TitleBar(title: "한 눈에 보는 종목비교", onDetailTap: () {}),
+          MarketCategoryCompareComponent(),
         ],
+      ),
+    );
+  }
+
+  Widget _infoTimeline() {
+    return Padding(
+      padding: EdgeInsetsGeometry.symmetric(horizontal: 24.0),
+      child: Column(
+        children: [TitleBar(title: "시간이 되면 놓치면 아쉬운 정보", onDetailTap: () {})],
       ),
     );
   }

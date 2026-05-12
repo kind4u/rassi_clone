@@ -8,9 +8,6 @@ class AppConstants {
   static const double expandedHeight = 80.0;
   static const double stickyHeaderHeight = 120.0;
 
-  // 탭 메뉴
-  static const List<String> homeTabs = ['홈', 'AI매매신호', '종목캐치', '마켓뷰'];
-
   // 색상 (한국 주식 시장 스타일)
   static const double cardElevation = 2.0;
   static const double cardBorderRadius = 12.0;
