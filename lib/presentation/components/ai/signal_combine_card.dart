@@ -334,6 +334,72 @@ class _SignalCombineCardState extends State<SignalCombineCard> {
           _selectedTab == 0
               ? _buildSignalRateContent()
               : _buildSignalStockContents(),
+
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 24.0),
+            child: Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(vertical: 12.0),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(8.0),
+                border: Border.all(
+                  color: Colors.grey.shade400, // 테두리 색상
+                  width: 1.0, // 테두리 두께
+                ),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [Text("종합보드 더보기")],
+              ),
+            ),
+          ),
+
+          Container(
+            padding: const EdgeInsets.all(16.0),
+            decoration: BoxDecoration(
+              color: Colors.blueGrey.shade50,
+              borderRadius: BorderRadius.circular(8.0),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.1),
+                  spreadRadius: 6,
+                  blurRadius: 8,
+                  offset: const Offset(0, 0),
+                ),
+              ],
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "AI는 현재 학습 업데이트중",
+                        style: const TextStyle(
+                          color: Color(0xFF6665FD),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      Text(
+                        "AI는 현재 데이터를 수집, 학습에 반영 중입니다.",
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w300,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                Icon(Icons.science_outlined, size: 64),
+              ],
+            ),
+          ),
         ],
       ),
     );

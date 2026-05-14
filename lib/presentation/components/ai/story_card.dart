@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
 
 class StoryCard extends StatelessWidget {
-  const StoryCard({super.key});
+  final String category;
+  final String contentTitle;
+  final String contentDate;
+
+  const StoryCard({
+    super.key,
+    required this.category,
+    required this.contentTitle,
+    required this.contentDate,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +33,7 @@ class StoryCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("주간브리핑", style: TextStyle(color: Color(0xFF6665FD))),
+            Text(category, style: TextStyle(color: Color(0xFF6665FD))),
 
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -34,13 +43,13 @@ class StoryCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "숨고르기 한 주, 차분한 라씨 매매비서",
+                      contentTitle,
                       style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.w300,
                       ),
                     ),
-                    Text("12월 넷째주", style: TextStyle(color: Colors.grey)),
+                    Text(contentDate, style: TextStyle(color: Colors.grey)),
                   ],
                 ),
                 // image

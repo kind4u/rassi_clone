@@ -138,7 +138,11 @@ class _AISignalTabContentState extends State<AISignalTabContent> {
             // story contents
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: StoryCard(),
+              child: StoryCard(
+                category: '주간브리핑',
+                contentTitle: '숨고르기 한 주, 차분한 라씨 매매비서',
+                contentDate: '12월 넷째주',
+              ),
             ),
 
             // story view more contents
@@ -189,38 +193,7 @@ class _AISignalTabContentState extends State<AISignalTabContent> {
             Container(height: 12, color: Colors.grey.shade100),
             const SizedBox(height: 24),
 
-            // combine board title
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0),
-              child: TitleBar(title: "매매신호 종합보드", onDetailTap: () {}),
-            ),
-
-            // combine board contents
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0),
-              child: SignalCombineCard(),
-            ),
-
-            // combine board view more contents
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: Container(
-                width: double.infinity,
-                padding: const EdgeInsets.symmetric(vertical: 12.0),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8.0),
-                  border: Border.all(
-                    color: Colors.grey.shade400, // 테두리 색상
-                    width: 1.0, // 테두리 두께
-                  ),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [Text("종합보드 더보기")],
-                ),
-              ),
-            ),
+            _summaryBoard(),
 
             // padding + divider
             const SizedBox(height: 24),
@@ -249,6 +222,34 @@ class _AISignalTabContentState extends State<AISignalTabContent> {
             const SizedBox(height: 24),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _storyCard() {
+    return Padding(
+      padding: EdgeInsetsGeometry.symmetric(horizontal: 24.0),
+      child: Column(
+        children: [
+          TitleBar(title: "라씨 매매비서의 스토리"),
+          StoryCard(
+            category: '주간브리핑',
+            contentTitle: '숨고르기 한 주, 차분한 라씨 매매비서',
+            contentDate: '12월 넷째주',
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _summaryBoard() {
+    return Padding(
+      padding: EdgeInsetsGeometry.symmetric(horizontal: 24.0),
+      child: Column(
+        children: [
+          TitleBar(title: "매매신호 종합보드"),
+          SignalCombineCard(),
+        ],
       ),
     );
   }
