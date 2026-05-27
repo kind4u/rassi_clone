@@ -15,7 +15,7 @@ class StoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 24.0),
+      padding: const EdgeInsets.symmetric(vertical: 12.0),
       child: Container(
         padding: EdgeInsets.all(16),
         decoration: BoxDecoration(

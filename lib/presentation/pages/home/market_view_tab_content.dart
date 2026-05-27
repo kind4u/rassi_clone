@@ -4,7 +4,6 @@ import 'package:rassi_clone/data/repositories/market_repository.dart';
 import 'package:rassi_clone/presentation/components/market/market_ai_news_component.dart';
 import 'package:rassi_clone/presentation/components/market/market_ai_pickword.dart';
 import 'package:rassi_clone/presentation/components/market/market_category_compare_component.dart';
-import 'package:rassi_clone/presentation/components/market/market_hot_theme_component.dart';
 import 'package:rassi_clone/presentation/components/market/net_sales_stock_component.dart';
 import 'package:rassi_clone/presentation/components/shared/title_bar.dart';
 import 'package:rassi_clone/presentation/components/hot_issue/today_hot_issue_component.dart';
