@@ -21,35 +21,42 @@ class AiFilterItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      spacing: 12,
-      children: [
-        SizedBox(height: 12),
+    return Padding(
+      padding: const EdgeInsets.only(top: 12.0),
+      child: Column(
+        spacing: 12,
+        children: [
+          SizedBox(height: 12),
 
-        TitleBar(title: '최근 3일 매수 후 급등 종목', detailText: '더보기', titleSize: 16),
-        // 매수 후 급등 종목 Contents
-        AIFilterList(items: _sampleData),
+          TitleBar(title: '최근 3일 매수 후 급등 종목', detailText: '더보기', titleSize: 16),
+          // 매수 후 급등 종목 Contents
+          AIFilterList(items: _sampleData),
 
-        TitleBar(title: '적중률 TOP 중 관망 종목', detailText: '더보기', titleSize: 16),
-        _PremiumPurchaseContents(),
+          TitleBar(title: '적중률 TOP 중 관망 종목', detailText: '더보기', titleSize: 16),
+          _PremiumPurchaseContents(),
 
-        TitleBar(
-          title: '적중률 TOP 중 최근 3일 매수 종목',
-          detailText: '더보기',
-          titleSize: 16,
-        ),
-        _PremiumPurchaseContents(),
+          TitleBar(
+            title: '적중률 TOP 중 최근 3일 매수 종목',
+            detailText: '더보기',
+            titleSize: 16,
+          ),
+          _PremiumPurchaseContents(),
 
-        TitleBar(
-          title: '평균수익률 TOP 중 최근 3일 매수 종목',
-          detailText: '더보기',
-          titleSize: 16,
-        ),
-        _PremiumPurchaseContents(),
+          TitleBar(
+            title: '평균수익률 TOP 중 최근 3일 매수 종목',
+            detailText: '더보기',
+            titleSize: 16,
+          ),
+          _PremiumPurchaseContents(),
 
-        TitleBar(title: '평균수익률 TOP 중 관망 종목', detailText: '더보기', titleSize: 16),
-        _PremiumPurchaseContents(),
-      ],
+          TitleBar(
+            title: '평균수익률 TOP 중 관망 종목',
+            detailText: '더보기',
+            titleSize: 16,
+          ),
+          _PremiumPurchaseContents(),
+        ],
+      ),
     );
   }
 }

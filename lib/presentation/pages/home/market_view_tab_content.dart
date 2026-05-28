@@ -34,56 +34,50 @@ class _MarketViewTabContentState extends State<MarketViewTabContent> {
           children: [
             _todayHotIssue(),
 
-            const SizedBox(height: 24),
-            Container(height: 12, color: Colors.grey.shade100),
-            const SizedBox(height: 24),
+            _divider(),
 
             _todayMarket(),
 
-            const SizedBox(height: 24),
-            Container(height: 12, color: Colors.grey.shade100),
-            const SizedBox(height: 24),
+            _divider(),
 
             _todayStockQuickScan(),
 
-            const SizedBox(height: 24),
-            Container(height: 12, color: Colors.grey.shade100),
-            const SizedBox(height: 24),
+            _divider(),
 
             _netSalesStock(),
 
-            const SizedBox(height: 24),
-            Container(height: 12, color: Colors.grey.shade100),
-            const SizedBox(height: 24),
+            _divider(),
 
             _marketAIPickword(),
 
-            const SizedBox(height: 24),
-            Container(height: 12, color: Colors.grey.shade100),
-            const SizedBox(height: 24),
+            _divider(),
 
             _categoryCompare(),
 
-            const SizedBox(height: 24),
-            Container(height: 12, color: Colors.grey.shade100),
-            const SizedBox(height: 24),
+            _divider(),
 
             _infoTimeline(),
 
-            const SizedBox(height: 24),
-            Container(height: 12, color: Colors.grey.shade100),
-            const SizedBox(height: 24),
+            _divider(),
 
             _marketAINews(),
 
-            const SizedBox(height: 24),
-            Container(height: 12, color: Colors.grey.shade100),
-            const SizedBox(height: 24),
+            _divider(),
 
             _todayIssue(),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _divider() {
+    return Column(
+      children: [
+        const SizedBox(height: 24),
+        Container(height: 12, color: Colors.grey.shade100),
+        const SizedBox(height: 24),
+      ],
     );
   }
 
