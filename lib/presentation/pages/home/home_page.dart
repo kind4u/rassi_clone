@@ -7,7 +7,8 @@ import 'package:rassi_clone/presentation/components/shared/home_tab_manager.dart
 /// 리팩토링된 홈페이지
 /// iOS의 UIViewController - UI Logic 담당
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final ValueNotifier<int>? tabNotifier;
+  const HomePage({super.key, this.tabNotifier});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -34,14 +35,20 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     _pageController = PageController(
       initialPage: HomeTabManager.defaultTabIndex,
     );
+    widget.tabNotifier?.addListener(_onTabNotifierChanged);
   }
 
   @override
   void dispose() {
+    widget.tabNotifier?.removeListener(_onTabNotifierChanged);
     _scrollController.dispose();
     _tabController.dispose();
     _pageController.dispose();
     super.dispose();
+  }
+
+  void _onTabNotifierChanged() {
+    _onTabSelected(widget.tabNotifier!.value);
   }
 
   void _onScroll() {

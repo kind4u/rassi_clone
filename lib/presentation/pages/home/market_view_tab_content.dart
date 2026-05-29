@@ -33,35 +33,27 @@ class _MarketViewTabContentState extends State<MarketViewTabContent> {
         child: Column(
           children: [
             _todayHotIssue(),
-
             _divider(),
 
             _todayMarket(),
-
             _divider(),
 
             _todayStockQuickScan(),
-
             _divider(),
 
             _netSalesStock(),
-
             _divider(),
 
             _marketAIPickword(),
-
             _divider(),
 
             _categoryCompare(),
-
             _divider(),
 
             _infoTimeline(),
-
             _divider(),
 
             _marketAINews(),
-
             _divider(),
 
             _todayIssue(),

@@ -36,27 +36,21 @@ class _AISignalTabContentState extends State<AISignalTabContent> {
         child: Column(
           children: [
             _aiDescriptionDetail(),
-
             _divider(),
 
             _rassiContent(),
-
             _divider(),
 
             _populationSignal(),
-
             _divider(),
 
             _storyCard(),
-
             _divider(),
 
             _aiFilterItems(),
-
             _divider(),
 
             _summaryBoard(),
-
             _divider(),
 
             _resultTopItems(),

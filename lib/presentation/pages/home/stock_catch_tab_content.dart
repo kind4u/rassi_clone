@@ -19,30 +19,28 @@ class StockCatchTabContent extends StatelessWidget {
         child: Column(
           children: [
             _whaleStockCatch(),
-
-            // padding + divider
-            const SizedBox(height: 24),
-            Container(height: 12, color: Colors.grey.shade100),
-            const SizedBox(height: 24),
+            _divider(),
 
             _achiveStockCatch(),
-
-            // padding + divider
-            const SizedBox(height: 24),
-            Container(height: 12, color: Colors.grey.shade100),
-            const SizedBox(height: 24),
+            _divider(),
 
             _etfStockCatch(),
-
-            // padding + divider
-            const SizedBox(height: 24),
-            Container(height: 12, color: Colors.grey.shade100),
-            const SizedBox(height: 24),
+            _divider(),
 
             _filterStockCatch(),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _divider() {
+    return Column(
+      children: [
+        const SizedBox(height: 24),
+        Container(height: 12, color: Colors.grey.shade100),
+        const SizedBox(height: 24),
+      ],
     );
   }
 
