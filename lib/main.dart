@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:rassi_clone/presentation/components/shared/drawer_tab_view.dart';
+import 'package:rassi_clone/presentation/pages/drawer/drawer_tab_manager.dart';
 import 'package:rassi_clone/presentation/pages/home/home_page.dart';
 import 'package:rassi_clone/presentation/pages/pocket/pocket_page.dart';
 import 'package:rassi_clone/presentation/pages/notification/notification_page.dart';
@@ -189,7 +191,6 @@ class _AppDrawer extends StatelessWidget {
       backgroundColor: Colors.white,
       child: SafeArea(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 12, 8, 12),
@@ -212,85 +213,17 @@ class _AppDrawer extends StatelessWidget {
               ),
             ),
             const Divider(height: 1),
-            const SizedBox(height: 8),
-            _DrawerSectionLabel('매매비서'),
-            _DrawerShortcut(
-              icon: Icons.bar_chart_rounded,
-              label: '마켓뷰',
-              onTap: () => onNavigateToHomeTab(0),
-            ),
-            _DrawerShortcut(
-              icon: Icons.smart_toy_outlined,
-              label: 'AI매매신호',
-              onTap: () => onNavigateToHomeTab(1),
-            ),
-            _DrawerShortcut(
-              icon: Icons.radar,
-              label: '종목캐치',
-              onTap: () => onNavigateToHomeTab(2),
-            ),
-            const SizedBox(height: 8),
-            const Divider(height: 1),
-            const SizedBox(height: 8),
-            _DrawerSectionLabel('메뉴'),
-            _DrawerShortcut(
-              icon: Icons.account_balance_wallet_outlined,
-              label: '나의 포켓',
-              onTap: () => onNavigateToPage(1),
-            ),
-            _DrawerShortcut(
-              icon: Icons.notifications_outlined,
-              label: '알림',
-              onTap: () => onNavigateToPage(2),
+            Expanded(
+              child: DrawerTabView(
+                tabs: DrawerTabManager.tabItems(
+                  onNavigateToHomeTab: onNavigateToHomeTab,
+                  onNavigateToPage: onNavigateToPage,
+                ),
+              ),
             ),
           ],
         ),
       ),
-    );
-  }
-}
-
-class _DrawerSectionLabel extends StatelessWidget {
-  final String label;
-  const _DrawerSectionLabel(this.label);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 4, 0, 4),
-      child: Text(
-        label,
-        style: const TextStyle(
-          fontSize: 12,
-          color: Colors.grey,
-          fontWeight: FontWeight.w500,
-        ),
-      ),
-    );
-  }
-}
-
-class _DrawerShortcut extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final VoidCallback onTap;
-
-  const _DrawerShortcut({
-    required this.icon,
-    required this.label,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      leading: Icon(icon, color: const Color(0xFF6665FD), size: 22),
-      title: Text(
-        label,
-        style: const TextStyle(fontSize: 15, color: Colors.black87),
-      ),
-      contentPadding: const EdgeInsets.symmetric(horizontal: 20),
-      onTap: onTap,
     );
   }
 }
