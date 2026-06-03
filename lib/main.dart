@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rassi_clone/presentation/components/shared/drawer_tab_view.dart';
+import 'package:rassi_clone/presentation/components/shared/slide_tab_view.dart';
 import 'package:rassi_clone/presentation/pages/drawer/drawer_tab_manager.dart';
 import 'package:rassi_clone/presentation/pages/home/home_page.dart';
 import 'package:rassi_clone/presentation/pages/pocket/pocket_page.dart';
@@ -214,10 +214,14 @@ class _AppDrawer extends StatelessWidget {
             ),
             const Divider(height: 1),
             Expanded(
-              child: DrawerTabView(
+              child: SlideTabView(
                 tabs: DrawerTabManager.tabItems(
                   onNavigateToHomeTab: onNavigateToHomeTab,
                   onNavigateToPage: onNavigateToPage,
+                ),
+                style: const SlideTabStyle(
+                  primaryColor: Color(0xFF6665FD),
+                  horizontalPadding: 0,
                 ),
               ),
             ),

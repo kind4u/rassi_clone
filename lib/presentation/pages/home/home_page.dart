@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:rassi_clone/core/constants/app_constants.dart';
 import 'package:rassi_clone/presentation/components/shared/rassi_search_bar.dart';
-import 'package:rassi_clone/presentation/components/shared/rassi_tab_bar.dart';
+import 'package:rassi_clone/presentation/components/shared/slide_tab_view.dart';
 import 'package:rassi_clone/presentation/components/shared/home_tab_manager.dart';
 
-/// 리팩토링된 홈페이지
-/// iOS의 UIViewController - UI Logic 담당
 class HomePage extends StatefulWidget {
   final ValueNotifier<int>? tabNotifier;
   const HomePage({super.key, this.tabNotifier});
@@ -14,27 +12,23 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
-  // 스크롤 관련 (iOS의 UIScrollViewDelegate와 유사)
+class _HomePageState extends State<HomePage> {
   late final ScrollController _scrollController;
-  bool _isHeaderCollapsed = false;
-
-  // 탭 관련 (iOS의 UITabBarController와 유사)
-  late final TabController _tabController;
   late final PageController _pageController;
+  bool _isHeaderCollapsed = false;
+  int _selectedTab = HomeTabManager.defaultTabIndex;
+  bool _isProgrammaticScroll = false;
+
+  static const _tabStyle = SlideTabStyle(
+    primaryColor: Colors.black,
+    horizontalPadding: 60,
+  );
 
   @override
   void initState() {
     super.initState();
     _scrollController = ScrollController()..addListener(_onScroll);
-    _tabController = TabController(
-      length: HomeTabManager.tabNames.length,
-      initialIndex: HomeTabManager.defaultTabIndex,
-      vsync: this,
-    );
-    _pageController = PageController(
-      initialPage: HomeTabManager.defaultTabIndex,
-    );
+    _pageController = PageController(initialPage: HomeTabManager.defaultTabIndex);
     widget.tabNotifier?.addListener(_onTabNotifierChanged);
   }
 
@@ -42,7 +36,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   void dispose() {
     widget.tabNotifier?.removeListener(_onTabNotifierChanged);
     _scrollController.dispose();
-    _tabController.dispose();
     _pageController.dispose();
     super.dispose();
   }
@@ -53,28 +46,30 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   void _onScroll() {
     final isCollapsed = _scrollController.offset >= AppConstants.expandedHeight;
-
     if (isCollapsed != _isHeaderCollapsed) {
       setState(() => _isHeaderCollapsed = isCollapsed);
     }
   }
 
-  // 탭 선택 시 PageView도 함께 이동 (iOS의 TabBar delegate와 유사)
   void _onTabSelected(int index) {
-    if (HomeTabManager.isValidTabIndex(index)) {
-      _tabController.animateTo(index);
-      _pageController.animateToPage(
-        index,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-      );
-    }
+    if (!HomeTabManager.isValidTabIndex(index) || index == _selectedTab) return;
+    setState(() => _selectedTab = index);
+    _isProgrammaticScroll = true;
+    _pageController
+        .animateToPage(
+          index,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeInOut,
+        )
+        .then((_) {
+          if (mounted) _isProgrammaticScroll = false;
+        });
   }
 
-  // PageView 스와이프 시 TabBar도 함께 이동
   void _onPageChanged(int index) {
+    if (_isProgrammaticScroll) return;
     if (HomeTabManager.isValidTabIndex(index)) {
-      _tabController.animateTo(index);
+      setState(() => _selectedTab = index);
     }
   }
 
@@ -91,10 +86,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           onPageChanged: _onPageChanged,
           itemCount: HomeTabManager.tabNames.length,
           itemBuilder: (context, index) {
-            // ListView로 감싸서 NestedScrollView의 body로 사용
-            // 이렇게 하면 헤더와 함께 스크롤되면서 overflow 방지
             return ListView(
-              padding: EdgeInsets.only(top: 16.0),
+              padding: const EdgeInsets.only(top: 16.0),
               children: [HomeTabManager.getTabContent(index)],
             );
           },
@@ -103,7 +96,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     );
   }
 
-  /// 앱바 - iOS의 NavigationBar와 유사
   Widget _buildAppBar() {
     return SliverAppBar(
       expandedHeight: AppConstants.expandedHeight,
@@ -134,7 +126,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     color: Color(0xFF6665FD),
                   ),
                 ),
-                SizedBox(height: 4),
               ],
             ),
           ),
@@ -143,7 +134,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     );
   }
 
-  /// 고정 헤더 - 검색바와 탭바를 포함
   Widget _buildStickyHeader() {
     return SliverPersistentHeader(
       pinned: true,
@@ -165,20 +155,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             children: [
               RassiSearchBar(
                 isCollapsed: _isHeaderCollapsed,
-                onTap: () {
-                  // 검색 페이지로 이동
-                },
+                onTap: () {},
               ),
-              ListenableBuilder(
-                listenable: _tabController,
-                builder: (context, child) {
-                  return RassiTabBar(
-                    tabs: HomeTabManager.tabNames,
-                    selectedIndex: _tabController.index,
-                    bottomShape: HomeTabManager.bottomShape,
-                    onTabSelected: _onTabSelected,
-                  );
-                },
+              SlideTabBar(
+                labels: HomeTabManager.tabNames,
+                selectedIndex: _selectedTab,
+                style: _tabStyle,
+                onTabSelected: _onTabSelected,
               ),
             ],
           ),
@@ -188,8 +171,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   }
 }
 
-/// SliverPersistentHeader용 Delegate
-/// iOS의 UICollectionViewFlowLayout과 유사한 역할
 class _StickyHeaderDelegate extends SliverPersistentHeaderDelegate {
   final double minHeight;
   final double maxHeight;
@@ -208,17 +189,10 @@ class _StickyHeaderDelegate extends SliverPersistentHeaderDelegate {
   double get maxExtent => maxHeight;
 
   @override
-  Widget build(
-    BuildContext context,
-    double shrinkOffset,
-    bool overlapsContent,
-  ) {
+  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
     return SizedBox.expand(child: child);
   }
 
   @override
-  bool shouldRebuild(covariant _StickyHeaderDelegate oldDelegate) {
-    return maxHeight != oldDelegate.maxExtent ||
-        minHeight != oldDelegate.minExtent;
-  }
+  bool shouldRebuild(covariant _StickyHeaderDelegate oldDelegate) => true;
 }
