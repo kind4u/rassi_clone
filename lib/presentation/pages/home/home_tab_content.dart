@@ -204,7 +204,9 @@ class _HomeTabContentState extends State<HomeTabContent> {
             // 오늘의 이슈 Components
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: TodayIssueComponent(issues: widget.repository.getTodayIssues()),
+              child: TodayIssueComponent(
+                issues: widget.repository.getTodayIssues(),
+              ),
             ),
 
             const SizedBox(height: 24),

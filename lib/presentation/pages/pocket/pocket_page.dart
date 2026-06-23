@@ -1,38 +1,78 @@
 import 'package:flutter/material.dart';
+import 'package:rassi_clone/presentation/components/shared/slide_tab_view.dart';
+import 'tabs/today_tab.dart';
+import 'tabs/my_pocket_tab.dart';
+import 'tabs/my_signal_tab.dart';
 
-class PocketPage extends StatelessWidget {
+class PocketPage extends StatefulWidget {
   const PocketPage({super.key});
+
+  @override
+  State<PocketPage> createState() => _PocketPageState();
+}
+
+class _PocketPageState extends State<PocketPage> {
+  late final PageController _pageController;
+  int _selectedTab = 0;
+  bool _isProgrammaticScroll = false;
+
+  static const _tabLabels = ['TODAY', '나의 포켓', '나만의 신호'];
+  static const _tabStyle = SlideTabStyle(
+    primaryColor: Colors.black,
+    horizontalPadding: 60,
+  );
+  static const _tabPages = <Widget>[TodayTab(), MyPocketTab(), MySignalTab()];
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  void _onTabSelected(int index) {
+    if (index == _selectedTab) return;
+    setState(() => _selectedTab = index);
+    _isProgrammaticScroll = true;
+    _pageController
+        .animateToPage(
+          index,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeInOut,
+        )
+        .then((_) {
+          if (mounted) _isProgrammaticScroll = false;
+        });
+  }
+
+  void _onPageChanged(int index) {
+    if (_isProgrammaticScroll) return;
+    setState(() => _selectedTab = index);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('포켓'),
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-      ),
-      body: const Center(
+      body: SafeArea(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              Icons.account_balance_wallet,
-              size: 100,
-              color: Colors.green,
+            SlideTabBar(
+              labels: _tabLabels,
+              selectedIndex: _selectedTab,
+              style: _tabStyle,
+              onTabSelected: _onTabSelected,
             ),
-            SizedBox(height: 20),
-            Text(
-              '포켓 페이지',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 10),
-            Text(
-              '내 포트폴리오와 보유 주식을 관리하세요',
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.grey,
+            Expanded(
+              child: PageView.builder(
+                controller: _pageController,
+                onPageChanged: _onPageChanged,
+                itemCount: _tabPages.length,
+                itemBuilder: (context, index) => _tabPages[index],
               ),
             ),
           ],
