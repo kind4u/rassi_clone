@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 class NavigationHandleTab extends StatelessWidget {
   final void Function(int tabIndex) onNavigateToHomeTab;
   final void Function(int pageIndex) onNavigateToPage;
+  final void Function(int tabIndex) onNavigateToPocketTab;
 
   const NavigationHandleTab({
     super.key,
     required this.onNavigateToHomeTab,
     required this.onNavigateToPage,
+    required this.onNavigateToPocketTab,
   });
 
   @override
@@ -21,9 +23,9 @@ class NavigationHandleTab extends StatelessWidget {
         _ShortcutItem(label: '종목캐치', onTap: () => onNavigateToHomeTab(2)),
         SizedBox(height: 8),
         _SectionLabel(icon: Icons.account_balance_wallet, label: '포켓'),
-        _ShortcutItem(label: 'TODAY', onTap: () => onNavigateToPage(1)),
-        _ShortcutItem(label: '나의 포켓', onTap: () => onNavigateToPage(1)),
-        _ShortcutItem(label: '나만의 신호', onTap: () => onNavigateToPage(1)),
+        _ShortcutItem(label: 'TODAY', onTap: () => onNavigateToPocketTab(0)),
+        _ShortcutItem(label: '나의 포켓', onTap: () => onNavigateToPocketTab(1)),
+        _ShortcutItem(label: '나만의 신호', onTap: () => onNavigateToPocketTab(2)),
         SizedBox(height: 8),
         _SectionLabel(icon: Icons.notifications, label: '알림'),
         _ShortcutItem(label: '전체', onTap: () => onNavigateToPage(2)),

@@ -38,15 +38,17 @@ class _MainScreenState extends State<MainScreen> {
   bool _isToggled = false;
 
   late final ValueNotifier<int> _homeTabNotifier;
+  late final ValueNotifier<int> _pocketTabNotifier;
   late final List<Widget> _pages;
 
   @override
   void initState() {
     super.initState();
     _homeTabNotifier = ValueNotifier<int>(0);
+    _pocketTabNotifier = ValueNotifier<int>(0);
     _pages = [
       HomePage(tabNotifier: _homeTabNotifier),
-      const PocketPage(),
+      PocketPage(tabNotifier: _pocketTabNotifier),
       const NotificationPage(),
     ];
   }
@@ -54,6 +56,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void dispose() {
     _homeTabNotifier.dispose();
+    _pocketTabNotifier.dispose();
     super.dispose();
   }
 
@@ -65,13 +68,19 @@ class _MainScreenState extends State<MainScreen> {
 
   void _navigateToHomeTab(BuildContext context, int tabIndex) {
     Navigator.pop(context);
-    setState(() => _selectedIndex = 0);
     _homeTabNotifier.value = tabIndex;
+    setState(() => _selectedIndex = 0);
   }
 
   void _navigateToPage(BuildContext context, int pageIndex) {
     Navigator.pop(context);
     setState(() => _selectedIndex = pageIndex);
+  }
+
+  void _navigateToPocketTab(BuildContext context, int tabIndex) {
+    Navigator.pop(context);
+    _pocketTabNotifier.value = tabIndex;
+    setState(() => _selectedIndex = 1);
   }
 
   @override
@@ -81,6 +90,8 @@ class _MainScreenState extends State<MainScreen> {
         onNavigateToHomeTab: (tabIndex) =>
             _navigateToHomeTab(context, tabIndex),
         onNavigateToPage: (pageIndex) => _navigateToPage(context, pageIndex),
+        onNavigateToPocketTab: (tabIndex) =>
+            _navigateToPocketTab(context, tabIndex),
       ),
       body: SafeArea(child: _pages[_selectedIndex]),
       bottomNavigationBar: BottomAppBar(
@@ -178,10 +189,12 @@ class _TabItem extends StatelessWidget {
 class _AppDrawer extends StatelessWidget {
   final void Function(int tabIndex) onNavigateToHomeTab;
   final void Function(int pageIndex) onNavigateToPage;
+  final void Function(int tabIndex) onNavigateToPocketTab;
 
   const _AppDrawer({
     required this.onNavigateToHomeTab,
     required this.onNavigateToPage,
+    required this.onNavigateToPocketTab,
   });
 
   @override
@@ -218,6 +231,7 @@ class _AppDrawer extends StatelessWidget {
                 tabs: DrawerTabManager.tabItems(
                   onNavigateToHomeTab: onNavigateToHomeTab,
                   onNavigateToPage: onNavigateToPage,
+                  onNavigateToPocketTab: onNavigateToPocketTab,
                 ),
                 style: const SlideTabStyle(
                   primaryColor: Color(0xFF6665FD),

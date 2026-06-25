@@ -5,7 +5,8 @@ import 'tabs/my_pocket_tab.dart';
 import 'tabs/my_signal_tab.dart';
 
 class PocketPage extends StatefulWidget {
-  const PocketPage({super.key});
+  final ValueNotifier<int>? tabNotifier;
+  const PocketPage({super.key, this.tabNotifier});
 
   @override
   State<PocketPage> createState() => _PocketPageState();
@@ -26,13 +27,21 @@ class _PocketPageState extends State<PocketPage> {
   @override
   void initState() {
     super.initState();
-    _pageController = PageController();
+    final initialTab = widget.tabNotifier?.value ?? 0;
+    _selectedTab = initialTab;
+    _pageController = PageController(initialPage: initialTab);
+    widget.tabNotifier?.addListener(_onTabNotifierChanged);
   }
 
   @override
   void dispose() {
+    widget.tabNotifier?.removeListener(_onTabNotifierChanged);
     _pageController.dispose();
     super.dispose();
+  }
+
+  void _onTabNotifierChanged() {
+    _onTabSelected(widget.tabNotifier!.value);
   }
 
   void _onTabSelected(int index) {

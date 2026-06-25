@@ -27,8 +27,10 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    final initialTab = widget.tabNotifier?.value ?? HomeTabManager.defaultTabIndex;
+    _selectedTab = initialTab;
     _scrollController = ScrollController()..addListener(_onScroll);
-    _pageController = PageController(initialPage: HomeTabManager.defaultTabIndex);
+    _pageController = PageController(initialPage: initialTab);
     widget.tabNotifier?.addListener(_onTabNotifierChanged);
   }
 
